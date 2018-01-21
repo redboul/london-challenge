@@ -1,0 +1,16 @@
+<div style="text-align:center">
+  <h1>
+    Do you have what it takes?
+  </h1>
+  <form class="loginForm">
+    <mat-form-field>
+      <input matInput placeholder="Login" [formControl]="emailFormControl" [(ngModel)]="user.name">
+    </mat-form-field>
+    
+    <mat-form-field>
+      <input matInput placeholder="Password" [type]="'password'" [formControl]="passwordFormControl" [(ngModel)]="user.password">
+    </mat-form-field>
+    <button mat-raised-button>Log me in !</button>
+  </form>
+  <img width="300" alt="Angular Logo" src="/assets/images/icon.png">
+</div>

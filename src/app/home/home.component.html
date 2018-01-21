@@ -1,0 +1,4 @@
+<div class="homeComponent">
+  <app-dashboard *ngIf="isUserAuthenticated()"></app-dashboard>
+  <app-login *ngIf="!isUserAuthenticated()"></app-login>
+</div>
