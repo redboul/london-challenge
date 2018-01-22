@@ -19,7 +19,9 @@ export class AuthenticationService {
   }
 
   retrieveUserRights(fUser: User) {
-    this.db.collection('users').valueChanges().subscribe(_userRights => this.userRights = _userRights);
+    // this.db.collection('users').get().valueChanges().subscribe(_userRights => this.userRights = _userRights);
+    const userRef = this.db.collection('users').doc(fUser.email).ref;
+    userRef.get().then(userContent => console.log(userContent));
   }
 
   logout() {
