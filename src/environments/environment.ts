@@ -6,11 +6,11 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: '<your-key>',
-    authDomain: '<your-project-authdomain>',
-    databaseURL: '<your-database-URL>',
-    projectId: '<your-project-id>',
-    storageBucket: '<your-storage-bucket>',
-    messagingSenderId: '<your-messaging-sender-id>'
+    apiKey: 'AIzaSyDuXkn6v5EpMeRMJyiFvWVUWVPRK0lXPyM',
+    authDomain: 'london-challenge.firebaseapp.com',
+    databaseURL: 'https://london-challenge.firebaseio.com',
+    projectId: 'london-challenge',
+    storageBucket: 'london-challenge.appspot.com',
+    messagingSenderId: '498368213049'
   }
 };

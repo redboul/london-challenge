@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -7,7 +8,7 @@ import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/form
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  user = {};
+  user = {email: null as string, password: null as string};
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -17,9 +18,13 @@ export class LoginComponent implements OnInit {
     Validators.required,
     Validators.minLength(6),
   ]);
-  constructor() { }
+  constructor(private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
+  }
+
+  login() {
+    this.authenticationService.login(this.user);
   }
 
 }

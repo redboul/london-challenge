@@ -2,15 +2,15 @@
   <h1>
     Do you have what it takes?
   </h1>
-  <form class="loginForm">
+  <form class="loginForm" (ngSubmit)="login()" >
     <mat-form-field>
-      <input matInput placeholder="Login" [formControl]="emailFormControl" [(ngModel)]="user.name">
+      <input matInput placeholder="Login" [formControl]="emailFormControl" [(ngModel)]="user.email">
     </mat-form-field>
     
     <mat-form-field>
       <input matInput placeholder="Password" [type]="'password'" [formControl]="passwordFormControl" [(ngModel)]="user.password">
     </mat-form-field>
-    <button mat-raised-button>Log me in !</button>
+    <button mat-raised-button type="submit" [color]="'primary'">Indeed I am !</button>
   </form>
   <img width="300" alt="Angular Logo" src="/assets/images/icon.png">
 </div>

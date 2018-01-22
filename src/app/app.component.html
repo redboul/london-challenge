@@ -3,9 +3,9 @@
 <mat-sidenav-container class="example-sidenav-container">
   <mat-sidenav #snav>
     <mat-nav-list>
-      <a mat-list-item routerLink=".">Dashboard</a>
-      <a mat-list-item routerLink=".">Challenges</a>
-      <a mat-list-item routerLink=".">Logout</a>
+      <a mat-list-item routerLink="/">Home</a>
+      <a mat-list-item *ngIf="isAuthenticated()" routerLink="/challenges">Challenges</a>
+      <a mat-list-item *ngIf="isAuthenticated()" (click)="logout">Logout</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
