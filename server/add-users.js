@@ -9,14 +9,8 @@ admin.initializeApp({
 
 var db = admin.firestore();
 
-//const usersRef = db.collection('users');
 console.log('Script to add or update a new London challenge user');
 saveOrUpdateUser();
-
-/*const setSf = citiesRef.doc('').set({
-    name: 'San Francisco', state: 'CA', country: 'USA',
-    capital: false, population: 860000 });*/
-
 
 async function saveOrUpdateUser() {
   const answer = await inquirer.prompt([{
@@ -24,17 +18,16 @@ async function saveOrUpdateUser() {
     name: 'email',
     message: 'User email:'},
     {
-      type: 'password',
-      name: 'password',
-      message: 'password:'},
-    {
-      type: 'password',
-      name: 'passwordConfirmation',
-      message: 're-renter password:'},
+      type: 'input',
+      name: 'teamName',
+      message: 'Team Name:'},
     {
       type: 'list',
       name: 'type',
       message: 'Quel type d\'utilisateur:',
     choices: [ {name: 'participant', value: 2}, { name: 'admin', value: 1 }]}]);
   console.log(answer);
+  const usersRef = db.collection('users');
+  const setSf = usersRef.doc(answer.email).set({
+    email: answer.email, teamName: answer.teamName, accountType: answer.type });
 }

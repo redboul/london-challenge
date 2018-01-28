@@ -43,3 +43,4 @@ Thumbs.db
 function/node_modules
 functions/node_modules
 .private
+firebase-debug.log
