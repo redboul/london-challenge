@@ -1,0 +1,17 @@
+.login {
+  text-align: center;
+}
+.loginForm {
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+}
+.loginForm-fields {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  margin-right: 20px;
+}
+.loginTitle {
+  font-size: 1.5rem;
+}
