@@ -9,7 +9,7 @@ const status = {
 @Injectable()
 export class AppStatusService {
 
-  status = status.available;
+  status = status.working;
   constructor() { }
   isWorking() {
     return this.status === status.working;

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from 'firebase/app';
 
 import { AngularFirestore } from 'angularfire2/firestore';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
 import { UserService } from './user.service';
 import { QuerySnapshot, Query } from 'firebase/firestore';
 
@@ -10,7 +10,7 @@ import { QuerySnapshot, Query } from 'firebase/firestore';
 export class FulfilledChallengesService {
   fulfilledChallenges: QuerySnapshot;
   fulfilledChallengesRef: Query;
-  size$ = new BehaviorSubject(0);
+  size$ = new Subject();
   constructor(userService: UserService, private db: AngularFirestore) {
     userService.user$.filter(user => !!user).subscribe(user => {
       this.retrieveFulFilledChallenges(user);

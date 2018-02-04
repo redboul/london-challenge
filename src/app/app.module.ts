@@ -29,6 +29,10 @@ import { AppStatusService } from './app-status.service';
 import { FulfilledChallengesService } from './fulfilled-challenges.service';
 import { LoadingComponent } from './loading/loading.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { DayComponent } from './day/day.component';
+import { CalendarComponent } from './calendar/calendar.component';
+import { ForeverChallengesComponent } from './forever-challenges/forever-challenges.component';
+import { ChallengeComponent } from './challenge/challenge.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +42,10 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     HomeComponent,
     DashboardComponent,
     LoadingComponent,
+    DayComponent,
+    CalendarComponent,
+    ForeverChallengesComponent,
+    ChallengeComponent,
   ],
   imports: [
     BrowserModule,
