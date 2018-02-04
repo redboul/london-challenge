@@ -25,7 +25,10 @@ import { AuthenticationService } from './authentication.service';
 import { DayService } from './day.service';
 import { UserService } from './user.service';
 import { ChallengesService } from './challenges.service';
+import { AppStatusService } from './app-status.service';
 import { FulfilledChallengesService } from './fulfilled-challenges.service';
+import { LoadingComponent } from './loading/loading.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,7 @@ import { FulfilledChallengesService } from './fulfilled-challenges.service';
     LoginComponent,
     HomeComponent,
     DashboardComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +52,7 @@ import { FulfilledChallengesService } from './fulfilled-challenges.service';
     MatFormFieldModule,
     MatInputModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
@@ -59,6 +64,7 @@ import { FulfilledChallengesService } from './fulfilled-challenges.service';
     DayService,
     ChallengesService,
     FulfilledChallengesService,
+    AppStatusService,
   ],
   bootstrap: [AppComponent]
 })
