@@ -1,5 +1,5 @@
 <div class="dashboard">
-  <div class="dashboard-currentTeamName">{{user.teamName}}</div>
-  <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-  <div class="dashboard-currentProgress">40/100</div>
+  <div class="dashboard-currentTeamName">{{user?.teamName}}</div>
+  <mat-progress-bar mode="determinate" [value]="fulfilledChallengesSize"></mat-progress-bar>
+  <div class="dashboard-currentProgress">{{fulfilledChallengesSize}}/100</div>
 </div>

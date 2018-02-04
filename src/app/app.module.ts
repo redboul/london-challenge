@@ -25,7 +25,7 @@ import { AuthenticationService } from './authentication.service';
 import { DayService } from './day.service';
 import { UserService } from './user.service';
 import { ChallengesService } from './challenges.service';
-import { FulFilledChallengesService } from './fulfilled-challenges.service';
+import { FulfilledChallengesService } from './fulfilled-challenges.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +58,7 @@ import { FulFilledChallengesService } from './fulfilled-challenges.service';
     UserService,
     DayService,
     ChallengesService,
-    FulFilledChallengesService,
+    FulfilledChallengesService,
   ],
   bootstrap: [AppComponent]
 })

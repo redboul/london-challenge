@@ -6,8 +6,10 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class AuthenticationService {
-  authenticatedUser$ = new BehaviorSubject(null);
-  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) { }
+  authenticatedUser$ = new BehaviorSubject(this.afAuth.auth.currentUser);
+  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) {
+    this.afAuth.auth.onAuthStateChanged(user => this.authenticatedUser$.next(user))
+  }
 
   isAuthenticated() {
     return !!this.afAuth.auth.currentUser;
@@ -17,7 +19,6 @@ export class AuthenticationService {
     return this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)
     .then(fUser => {
       console.log('logged in with user', fUser.uid);
-      this.authenticatedUser$.next(fUser);
     });
   }
   logout() {
