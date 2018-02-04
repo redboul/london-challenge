@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import { AuthenticationService } from '../authentication.service';
+import { AppStatusService } from '../app-status.service';
 
 @Component({
   selector: 'app-login',
@@ -18,9 +19,11 @@ export class LoginComponent implements OnInit {
     Validators.required,
     Validators.minLength(6),
   ]);
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private appStatusService: AppStatusService,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
+    this.appStatusService.available();
   }
 
   login() {

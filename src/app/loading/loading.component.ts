@@ -8,7 +8,7 @@ import { AppStatusService } from '../app-status.service';
 })
 export class LoadingComponent implements OnInit {
 
-  constructor(private appStatus: AppStatusService) { }
+  constructor(public appStatus: AppStatusService) { }
 
   ngOnInit() {
   }
