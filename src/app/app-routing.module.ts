@@ -12,12 +12,9 @@ export const ROUTES: Routes = [
   { path: 'calendar', children: [
     { path: '', component: CalendarComponent },
     { path: ':day', component: DayComponent },
-    { path: ':day/:challengeId', component: ChallengeComponent }
   ] },
-  { path: 'permanentChallenges', children: [
-    { path: '', component: ForeverChallengesComponent },
-    { path: ':challengeId', component: ChallengeComponent }
-  ] }
+  { path: 'permanentChallenges', component: ForeverChallengesComponent },
+  { path: 'challenge/:challengeId', component: ChallengeComponent },
 ];
 
 @NgModule({

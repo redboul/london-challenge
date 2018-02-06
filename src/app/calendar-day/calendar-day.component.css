@@ -1,0 +1,18 @@
+.calendarDay {
+  width: 70px;
+  height: 70px;
+  margin: 5px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: #C8102E;
+  color: white;
+}
+.calendarDay-name {
+  text-align: left;
+  flex-grow: 1;
+}
+.calendarDay-status {
+  text-align: right;
+}

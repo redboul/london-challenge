@@ -5,12 +5,14 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { Subject } from 'rxjs/Subject';
 import { UserService } from './user.service';
 import { QuerySnapshot, Query } from 'firebase/firestore';
+import { FulFilledChallenge } from './fulfilled-challenge';
 
 @Injectable()
 export class FulfilledChallengesService {
-  fulfilledChallenges: QuerySnapshot;
-  fulfilledChallengesRef: Query;
+  private fulfilledChallenges: QuerySnapshot;
+  private fulfilledChallengesRef: Query;
   size$ = new Subject();
+  fulfilledChallenges$ = new Subject<FulFilledChallenge[]>();
   constructor(userService: UserService, private db: AngularFirestore) {
     userService.user$.filter(user => !!user).subscribe(user => {
       this.retrieveFulFilledChallenges(user);
@@ -28,6 +30,7 @@ export class FulfilledChallengesService {
     this.fulfilledChallengesRef.get().then(fulfilledChallenges => {
       console.log(fulfilledChallenges);
       this.fulfilledChallenges = fulfilledChallenges;
+      this.fulfilledChallenges$.next(this.fulfilledChallenges.docs.map(doc => ({ id: doc.id, ...doc.data()})));
       this.size$.next(this.fulfilledChallenges.size);
     });
   }

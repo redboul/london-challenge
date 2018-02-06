@@ -17,7 +17,7 @@ export class UserService {
 
   retrieveUserRights(fUser: User) {
     const userRef = this.db.collection('users').doc(fUser.email).ref;
-    userRef.get().then(userContent => this.user$.next(userContent.data()));
+    userRef.get().then(userContent => this.user$.next({ id: userContent.id, ...userContent.data()}));
   }
 }
 

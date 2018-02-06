@@ -11,9 +11,10 @@ import {Challenge} from './challenge';
 
 @Injectable()
 export class ChallengesService {
-  challenges: QuerySnapshot;
-  foreverChallenges$ = new BehaviorSubject([]);
-  allChallenges: Challenge[] = [];
+  private challenges: QuerySnapshot;
+  public foreverChallenges$ = new BehaviorSubject<Challenge[]>(undefined);
+  public allChallenges$ =  new BehaviorSubject<Challenge[]>(undefined);
+  public allChallenges: Challenge[] = [];
   constructor(
     private authenticationService: AuthenticationService,
     private db: AngularFirestore,
@@ -29,7 +30,8 @@ export class ChallengesService {
     this.db.collection('challenges').ref.get().then(challenges => {
       console.log(challenges);
       this.challenges = challenges;
-      this.allChallenges = challenges.docs.map(doc => doc.data()) as any;
+      this.allChallenges = challenges.docs.map(doc => ({ id: doc.id, ...doc.data()})) as any;
+      this.allChallenges$.next(this.allChallenges);
       this.foreverChallenges$.next(this.allChallenges.filter(challenge => !challenge.day));
       this.appStatusService.available();
     });

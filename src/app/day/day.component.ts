@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { DayService } from './../day.service';
+import { FulFilledChallenge } from './../fulfilled-challenge';
+import { Challenge } from './../challenge';
+import { Component, OnInit, Input } from '@angular/core';
+import { Day } from '../day';
+import { ChallengesService } from '../challenges.service';
+import { FulfilledChallengesService } from '../fulfilled-challenges.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AppStatusService } from '../app-status.service';
 
 @Component({
   selector: 'app-day',
@@ -6,10 +14,33 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./day.component.css']
 })
 export class DayComponent implements OnInit {
-
-  constructor() { }
+  challenges: Challenge[] = [];
+  fulfilledChallenges: FulFilledChallenge[] = [];
+  dayId: string;
+  day: Day;
+  constructor(
+    private appStatusService: AppStatusService,
+    private dayService: DayService,
+    private challengesService: ChallengesService,
+    private fulfilledChallengeService: FulfilledChallengesService,
+    private route: ActivatedRoute
+  ) {
+    this.route.params.subscribe(params => this.dayId = params.day);
+  }
 
   ngOnInit() {
+    this.dayService.days$
+      .filter(days => !!days)
+      .subscribe(days => this.day = days.find(day => day.id === this.dayId));
+    this.challengesService.allChallenges$
+      .filter(challenges => !! challenges)
+      .subscribe(challenges => {
+        this.challenges = challenges.filter(challenge => challenge.day === this.dayId);
+        this.appStatusService.available();
+      });
+      this.fulfilledChallengeService.fulfilledChallenges$.filter(challenges => !!challenges).subscribe(ffChallenges => {
+        this.fulfilledChallenges = ffChallenges.filter(ffc => ffc.id === this.dayId);
+      });
   }
 
 }

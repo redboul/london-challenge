@@ -4,6 +4,7 @@ import { User } from 'firebase/app';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AuthenticationService } from './authentication.service';
+import { AppStatusService } from './app-status.service';
 
 @Injectable()
 export class DayService {
@@ -17,8 +18,7 @@ export class DayService {
 
     retrieveDays(fUser: User) {
     const daysRef = this.db.collection('days').ref.get().then(days => {
-      console.log(days);
-      this.days$.next(days);
+      this.days$.next(days.docs.map(doc => ({ id: doc.id, ...doc.data()})));
     });
   }
 }

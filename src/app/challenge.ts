@@ -4,6 +4,7 @@ export const challengeType = {
 };
 
 export interface Challenge {
+  id: string;
   day?: string;
   description: string;
   identifier: string;

@@ -1,3 +1,9 @@
-<p>
-  day works!
-</p>
+<div class="day">
+  <div class="day-name">{{day?.labelLong}}</div>
+  <div class="day-status">
+    {{fulfilledChallenges?.length}}/{{challenges?.length}}
+  </div>
+  <div class="day-challenges">
+      <app-challenge [challenge]="challenge" *ngFor="let challenge of challenges"></app-challenge>
+  </div>
+</div>
