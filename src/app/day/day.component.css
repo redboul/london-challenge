@@ -1,0 +1,15 @@
+.day-name {
+  font-size: 1.5em;
+  margin: 20px;
+}
+
+.day-progressBar {
+  margin: 20px;
+}
+
+.day-progressBar-status {
+  width: 100%;
+  text-align: right;
+  margin-top: 10px;
+  font-size: 1.2em;
+}

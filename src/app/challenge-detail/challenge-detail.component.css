@@ -1,0 +1,9 @@
+.challenge-text-form .mat-form-field {
+  display: block;
+  margin: 20px;
+}
+
+.challenge-text-submitButton {
+  margin: 20px;
+  text-align: right;
+}

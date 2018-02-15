@@ -1,3 +1,8 @@
-<p>
-  challenge works!
-</p>
+<div class="challenge">
+  <div class="challenge-title">{{challenge.label}}</div>
+  <div *ngIf="isChallengeFulfilled()">
+
+  </div>
+  <div class="challenge-detailsAction"><mat-icon>keyboard_arrow_right
+    </mat-icon></div>
+</div>

@@ -1,9 +1,12 @@
 <div class="day">
   <div class="day-name">{{day?.labelLong}}</div>
-  <div class="day-status">
-    {{fulfilledChallenges?.length}}/{{challenges?.length}}
+  <div class="day-progressBar">
+    <mat-progress-bar mode="determinate" [value]="fulfilledChallengesPercentage()"></mat-progress-bar>
+    <div class="day-progressBar-status">
+      {{fulfilledChallenges?.length}}/{{challenges?.length}}
+    </div>
   </div>
   <div class="day-challenges">
-      <app-challenge [challenge]="challenge" *ngFor="let challenge of challenges"></app-challenge>
+      <app-challenge [challenge]="challenge" *ngFor="let challenge of challenges" (click)="goToChallenge(challenge)"></app-challenge>
   </div>
 </div>

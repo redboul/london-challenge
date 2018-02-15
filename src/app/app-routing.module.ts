@@ -1,3 +1,4 @@
+import { ChallengeDetailComponent } from './challenge-detail/challenge-detail.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -14,7 +15,7 @@ export const ROUTES: Routes = [
     { path: ':day', component: DayComponent },
   ] },
   { path: 'permanentChallenges', component: ForeverChallengesComponent },
-  { path: 'challenge/:challengeId', component: ChallengeComponent },
+  { path: 'challenge/:challengeId', component: ChallengeDetailComponent },
 ];
 
 @NgModule({

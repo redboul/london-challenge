@@ -34,6 +34,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { ForeverChallengesComponent } from './forever-challenges/forever-challenges.component';
 import { ChallengeComponent } from './challenge/challenge.component';
 import { CalendarDayComponent } from './calendar-day/calendar-day.component';
+import { ChallengeDetailComponent } from './challenge-detail/challenge-detail.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { CalendarDayComponent } from './calendar-day/calendar-day.component';
     ForeverChallengesComponent,
     ChallengeComponent,
     CalendarDayComponent,
+    ChallengeDetailComponent,
   ],
   imports: [
     BrowserModule,

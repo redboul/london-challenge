@@ -23,7 +23,8 @@ export class DayComponent implements OnInit {
     private dayService: DayService,
     private challengesService: ChallengesService,
     private fulfilledChallengeService: FulfilledChallengesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.route.params.subscribe(params => this.dayId = params.day);
   }
@@ -42,5 +43,10 @@ export class DayComponent implements OnInit {
         this.fulfilledChallenges = ffChallenges.filter(ffc => ffc.id === this.dayId);
       });
   }
-
+  fulfilledChallengesPercentage() {
+    return (this.fulfilledChallenges && this.challenges) ? this.fulfilledChallenges.length * 100 / this.challenges.length : 0;
+  }
+  goToChallenge(challenge: Challenge) {
+    this.router.navigate(['challenge', challenge.id]);
+  }
 }
