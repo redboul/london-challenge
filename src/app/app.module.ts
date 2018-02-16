@@ -1,3 +1,4 @@
+import { ChallengeStorageService } from './challenge-storage.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -7,11 +8,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatButtonModule, MatIconModule, MatSidenavModule, MatToolbarModule, MatListModule, MatInputModule } from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AppComponent } from './app.component';
@@ -28,7 +31,6 @@ import { ChallengesService } from './challenges.service';
 import { AppStatusService } from './app-status.service';
 import { FulfilledChallengesService } from './fulfilled-challenges.service';
 import { LoadingComponent } from './loading/loading.component';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { DayComponent } from './day/day.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { ForeverChallengesComponent } from './forever-challenges/forever-challenges.component';
@@ -69,6 +71,7 @@ import { ChallengeDetailComponent } from './challenge-detail/challenge-detail.co
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    AngularFireStorageModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [AuthenticationService,
@@ -77,6 +80,7 @@ import { ChallengeDetailComponent } from './challenge-detail/challenge-detail.co
     ChallengesService,
     FulfilledChallengesService,
     AppStatusService,
+    ChallengeStorageService,
   ],
   bootstrap: [AppComponent]
 })

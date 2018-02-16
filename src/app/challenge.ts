@@ -7,7 +7,7 @@ export interface Challenge {
   id: string;
   day?: string;
   description: string;
-  identifier: string;
+  multiple: boolean;
   label: string;
   type: number;
 }

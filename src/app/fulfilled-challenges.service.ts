@@ -11,6 +11,7 @@ import { FulFilledChallenge } from './fulfilled-challenge';
 export class FulfilledChallengesService {
   private fulfilledChallenges: QuerySnapshot;
   private fulfilledChallengesRef: Query;
+  private fulfilledChallengesCollection;
   size$ = new Subject();
   fulfilledChallenges$ = new Subject<FulFilledChallenge[]>();
   constructor(userService: UserService, private db: AngularFirestore) {
@@ -20,7 +21,8 @@ export class FulfilledChallengesService {
   }
 
   retrieveFulFilledChallenges(user) {
-    this.fulfilledChallengesRef = this.db.collection(`users/${user.email}/fulfilledChallenges`).ref;
+    this.fulfilledChallengesCollection = this.db.collection(`users/${user.email}/fulfilledChallenges`);
+    this.fulfilledChallengesRef = this.fulfilledChallengesCollection.ref;
     this.fulfilledChallengesRef.onSnapshot(docSnapshot => {
       console.log(docSnapshot);
     });
@@ -33,6 +35,12 @@ export class FulfilledChallengesService {
       this.fulfilledChallenges$.next(this.fulfilledChallenges.docs.map(doc => ({ id: doc.id, ...doc.data()})));
       this.size$.next(this.fulfilledChallenges.size);
     });
+  }
+  submitFulfillChallenge(fulfillChallenge: FulFilledChallenge) {
+    this.fulfilledChallengesCollection.doc(fulfillChallenge.id).set({
+      type: fulfillChallenge.type,
+      answers: fulfillChallenge.answers,
+    }, { merge: true });
   }
 }
 

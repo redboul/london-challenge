@@ -13,11 +13,16 @@
                     </mat-form-field>
             <div class="challenge-text-submitButton"><button (click)="submitAnswer()" mat-raised-button>Save Answer</button>
             </div>
-    </div>    
+    </div>
   </div>
 
   <div *ngIf="isMediaChallenge()">
-    <div *ngIf="isChallengeFulfilled()"></div>
-
+    <div *ngIf="isChallengeFulfilled()">
+      <div *ngFor="let answer of fulfilledChallenge?.answers"><div>{{answer}}</div></div>      
+    </div>
+    <div class="challenge-text-form" *ngIf="!isChallengeFulfilled()">
+      <input type="file" id="fileForAnswer" (change)="submitFileForAnswer($event)" multiple hidden/>
+      <button mat-raised-button (click)="openFileInput()">Choose files...</button>
+    </div>    
   </div>
 </div>
