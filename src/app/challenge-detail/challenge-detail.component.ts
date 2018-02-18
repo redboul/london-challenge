@@ -31,7 +31,7 @@ export class ChallengeDetailComponent implements OnInit {
     this.route.paramMap.subscribe((map: ParamMap) => this.challengeId = map.get('challengeId'));
     this.challengesService.allChallenges$.filter(challenges => !! challenges)
       .subscribe(challenges => this.challenge = challenges.find(c => c.id === this.challengeId));
-    this.fulfilledChallengesService.fulfilledChallenges$
+    this.fulfilledChallengesService.fulfilledChallenges$.filter(ffcs => !!ffcs)
       .subscribe(ffcs => this.fulfilledChallenge = ffcs.find(ffc => ffc.id === this.challenge.id));
   }
   isTextChallenge() {
@@ -39,6 +39,9 @@ export class ChallengeDetailComponent implements OnInit {
   }
   isMediaChallenge() {
     return this.challenge && this.challenge.type === challengeType.media;
+  }
+  isImageChallenge() {
+    return this.challenge && this.challenge.type === challengeType.image;
   }
   isChallengeFulfilled() {
     return !!this.fulfilledChallenge && !this.challenge.multiple;
@@ -48,7 +51,8 @@ export class ChallengeDetailComponent implements OnInit {
     this.fulfilledChallengesService.submitFulfillChallenge({
       id: this.challenge.id,
       type: this.challenge.type,
-      answers: (this.fulfilledChallenge) ? [this.answerToSubmit] : [...this.fulfilledChallenge.answers, this.answerToSubmit],
+      answers: (!this.fulfilledChallenge || !this.fulfilledChallenge.answers)
+        ? [this.answerToSubmit] : [...this.fulfilledChallenge.answers, this.answerToSubmit],
     });
   }
   openFileInput() {
@@ -61,7 +65,7 @@ export class ChallengeDetailComponent implements OnInit {
       this.fulfilledChallengesService.submitFulfillChallenge({
         id: this.challenge.id,
         type: this.challenge.type,
-        answers: taskResponses.map(taskResponse => taskResponse.downloadURL),
+        answers: taskResponses.map(taskResponse => taskResponse.ref.fullPath),
       });
     });
   }

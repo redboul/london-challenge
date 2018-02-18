@@ -8,11 +8,15 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class AuthenticationService {
   authenticatedUser$ = new BehaviorSubject(this.afAuth.auth.currentUser);
   constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) {
-    this.afAuth.auth.onAuthStateChanged(user => this.authenticatedUser$.next(user))
+    this.afAuth.auth.onAuthStateChanged(user => this.authenticatedUser$.next(user));
   }
 
   isAuthenticated() {
     return !!this.afAuth.auth.currentUser;
+  }
+
+  userId() {
+    return this.afAuth.auth.currentUser && this.afAuth.auth.currentUser.uid;
   }
 
   login(user: {email: string, password: string}): Promise<any> {

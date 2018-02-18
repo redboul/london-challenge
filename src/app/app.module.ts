@@ -15,6 +15,7 @@ import { MatButtonModule, MatIconModule, MatSidenavModule, MatToolbarModule, Mat
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatDividerModule} from '@angular/material/divider';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AppComponent } from './app.component';
@@ -37,6 +38,7 @@ import { ForeverChallengesComponent } from './forever-challenges/forever-challen
 import { ChallengeComponent } from './challenge/challenge.component';
 import { CalendarDayComponent } from './calendar-day/calendar-day.component';
 import { ChallengeDetailComponent } from './challenge-detail/challenge-detail.component';
+import { ChallengeDetailImageAnswerComponent } from './challenge-detail-image-answer/challenge-detail-image-answer.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,7 @@ import { ChallengeDetailComponent } from './challenge-detail/challenge-detail.co
     ChallengeComponent,
     CalendarDayComponent,
     ChallengeDetailComponent,
+    ChallengeDetailImageAnswerComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,7 @@ import { ChallengeDetailComponent } from './challenge-detail/challenge-detail.co
     MatInputModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatDividerModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
