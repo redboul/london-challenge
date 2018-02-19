@@ -11,7 +11,7 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <app-loading></app-loading>
-    <div [hidden]="isAppWorking()">
+    <div [hidden]="isAppWorking()" class="appContent">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

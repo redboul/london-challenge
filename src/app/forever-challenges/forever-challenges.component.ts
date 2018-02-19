@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChallengesService } from '../challenges.service';
 import { AppStatusService } from '../app-status.service';
@@ -13,6 +14,7 @@ export class ForeverChallengesComponent implements OnInit, OnDestroy {
   constructor(
     private challengesService: ChallengesService,
     private appStatusService: AppStatusService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -24,5 +26,8 @@ export class ForeverChallengesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.appStatusService.workInProgress();
+  }
+  goToChallenge(challenge: Challenge) {
+    this.router.navigate(['challenge', challenge.id]);
   }
 }

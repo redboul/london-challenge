@@ -2,8 +2,8 @@
   text-align: center;
 }
 .loginForm {
-  display: flex;
-  flex-direction: row;
+   /* display: flex; */
+  flex-direction: column;
   margin: 20px;
 }
 .loginForm-fields {

@@ -1,35 +1,39 @@
 <div class="challenge">
   <div class="challenge-title">{{challenge?.label}}</div>
-  <div class="challenge-day" *ngIf="challenge?.day">on the <a routerLink="/calendar/{{challenge.day}}">{{challenge.dayLabel}}</a></div>
+  <div class="challenge-day" *ngIf="challenge?.day">on the
+    <a routerLink="/calendar/{{challenge.day}}">{{challenge.dayLabel}}</a>
+  </div>
   <div class="challenge-description">{{challenge?.description}}</div>
   <mat-divider></mat-divider>
   <div class="challenge-text" *ngIf="isTextChallenge()">
     <div *ngIf="isChallengeFulfilled()">
       <div class="challenge-text-answersLabel">Your answers:</div>
-      <div *ngFor="let answer of fulfilledChallenge?.answers"><pre>{{answer}}</pre></div>
+      <div class="challenge-text-answer" *ngFor="let answer of fulfilledChallenge?.answers">
+        <p>{{answer}}</p>
+      </div>
     </div>
-    <div class="challenge-text-form" *ngIf="!isChallengeFulfilled()">
-        <mat-form-field>
-            <textarea matInput placeholder="Answer"
-            [(ngModel)]="answerToSubmit"></textarea>
-                    </mat-form-field>
-            <div class="challenge-text-submitButton"><button (click)="submitAnswer()" mat-raised-button>Save Answer</button>
-            </div>
+    <div class="challenge-text-form" *ngIf="!isAnswerLimitReached()">
+      <mat-form-field>
+        <textarea matInput placeholder="Answer" [(ngModel)]="answerToSubmit"></textarea>
+      </mat-form-field>
+      <div class="challenge-text-submitButton">
+        <button (click)="submitAnswer()" mat-raised-button>Save Answer</button>
+      </div>
     </div>
   </div>
 
   <div class="challenge-media" *ngIf="isMediaChallenge() || isImageChallenge()">
-    <div class="challenge-media-answers" *ngIf="isChallengeFulfilled()">
+    <div class="challenge-media-answers" *ngIf="!isAnswerLimitReached()">
       <div class="challenge-media-answersLabel">Your answers:</div>
       <div *ngFor="let answer of fulfilledChallenge?.answers">
         <div *ngIf="isImageChallenge()">
           <app-challenge-detail-image-answer [filePath]="answer"></app-challenge-detail-image-answer>
         </div>
-      </div>      
+      </div>
     </div>
     <div class="challenge-media-form" *ngIf="!isChallengeFulfilled()">
       <input type="file" id="fileForAnswer" (change)="submitFileForAnswer($event)" multiple hidden/>
       <button mat-raised-button (click)="openFileInput()">Choose files...</button>
-    </div>    
+    </div>
   </div>
 </div>

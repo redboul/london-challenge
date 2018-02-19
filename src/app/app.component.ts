@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
 import { AppStatusService } from './app-status.service';
@@ -10,7 +11,8 @@ import { AppStatusService } from './app-status.service';
 export class AppComponent {
   constructor(
     private authenticationService: AuthenticationService,
-    private appStatusService: AppStatusService
+    private appStatusService: AppStatusService,
+    private router: Router,
   ) {}
 
   isAuthenticated() {
@@ -18,6 +20,7 @@ export class AppComponent {
   }
   logout() {
     this.authenticationService.logout();
+    this.router.navigate(['/']);
   }
   isAppWorking() {
     return this.appStatusService.isWorking();

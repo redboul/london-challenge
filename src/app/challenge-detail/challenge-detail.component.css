@@ -3,31 +3,35 @@
 }
 
 .challenge-title {
-  margin: 20px 20px 0 20px;
+  margin: 20px 0 0;
   font-size: 1.5rem;
 }
 
 .challenge-day {
   font-style: italic;
   text-align: right;
-  margin-right: 20px;
   font-size: 1.2rem;
 }
 
-.challenge-media-answersLabel, .challenge-text-answersLabel {
+.challenge-media-answersLabel,
+.challenge-text-answersLabel {
   margin: 10px;
 }
 
+.challenge-text-answer p {
+  padding: 10px;
+}
+
 .challenge-description {
-  margin: 10px 20px;
+  margin: 10px 0;
 }
 
 .challenge-text-form .mat-form-field {
   display: block;
-  margin: 20px;
+  margin: 20px 0;
 }
 
 .challenge-text-submitButton {
-  margin: 20px;
+  margin: 20px 0;
   text-align: right;
 }

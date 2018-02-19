@@ -2,3 +2,6 @@
   height: calc(100% - 57px);
   overflow: hidden;
 }
+.appContent {
+  margin: 20px;
+}
