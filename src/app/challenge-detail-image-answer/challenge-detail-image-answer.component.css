@@ -1,3 +1,46 @@
 .challengeImageAnswer img {
-    width: 100%;
+  max-width: 100%;
+}
+
+.challengeImageAnswer-loader {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.challengeImageAnswer-content {
+  position: relative;
+  margin: 20px;
+}
+
+.challengeImageAnswer-content-action {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.challengeImageAnswer-confirmDelete {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  color: #000;
+  background-color: rgba(255, 255, 255, 0.8);
+  transform: translateX(120%);
+  display: flex;
+  flex-direction: column;
+}
+.challengeImageAnswer-confirmDelete-content {
+  position: absolute;
+  top: 15%;
+  left: 0;
+}
+
+.challengeImageAnswer-confirmDelete-label {
+  margin: 20px;
+}
+.challengeImageAnswer-confirmDelete-actions {
+  display: flex;
+  justify-content: space-around;
 }

@@ -10,7 +10,7 @@ import { Input, Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { Challenge, challengeType } from '../challenge';
 import { AngularFireUploadTask } from 'angularfire2/storage';
 import { UploadTaskSnapshot } from '@firebase/storage-types';
-import { take } from 'lodash';
+import { take, pull } from 'lodash';
 import 'rxjs/add/observable/zip';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -28,7 +28,7 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
   routeSubscription: Subscription;
   allChallengeSubscription: Subscription;
   ffChallengeSubscription: Subscription;
-
+  uploading = false;
   constructor(
     private fulfilledChallengesService: FulfilledChallengesService,
     private challengesService: ChallengesService,
@@ -80,18 +80,35 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
     return this.challenge && this.challenge.type === challengeType.image;
   }
   isChallengeFulfilled() {
-    return !!this.fulfilledChallenge && !this.challenge.multiple;
+    return (
+      !!this.fulfilledChallenge &&
+      !this.challenge.multiple &&
+      !!this.fulfilledChallenge.answers &&
+      !!this.fulfilledChallenge.answers.length
+    );
   }
   isAnswerLimitReached() {
     return (
-      this.fulfilledChallenge &&
-      this.fulfilledChallenge.answers &&
+      !!this.fulfilledChallenge &&
+      !!this.fulfilledChallenge.answers &&
+      !!this.fulfilledChallenge.answers.length &&
       (this.challenge.maxAnswers || 1) >= this.fulfilledChallenge.answers.length
     );
   }
 
+  deleteAnswer(answerToRemove) {
+    if (this.fulfilledChallenge && this.fulfilledChallenge.answers) {
+      this.saveOrUpdateFulfilledChallenge({
+        id: this.challenge.id,
+        type: this.challenge.type,
+        day: this.challenge.day,
+        answers: pull(this.fulfilledChallenge.answers, answerToRemove),
+      });
+    }
+  }
+
   submitAnswer() {
-    this.fulfilledChallengesService.submitFulfillChallenge({
+    this.saveOrUpdateFulfilledChallenge({
       id: this.challenge.id,
       type: this.challenge.type,
       day: this.challenge.day,
@@ -104,20 +121,28 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
             ),
     });
   }
+
+  saveOrUpdateFulfilledChallenge(ffChallenge: FulFilledChallenge) {
+    this.fulfilledChallengesService.submitFulfillChallenge(ffChallenge);
+  }
   openFileInput() {
     this.el.nativeElement.querySelector('#fileForAnswer').click();
   }
   submitFileForAnswer(event) {
+    this.uploading = true;
     const uploadTasks: AngularFireUploadTask[] = Array.from(
       event.target.files,
     ).map(file => this.challengeStorageService.addFile(file as File));
-    Promise.all(uploadTasks).then((taskResponses: UploadTaskSnapshot[]) => {
-      this.fulfilledChallengesService.submitFulfillChallenge({
-        id: this.challenge.id,
-        day: this.challenge.day,
-        type: this.challenge.type,
-        answers: taskResponses.map(taskResponse => taskResponse.ref.fullPath),
-      });
-    });
+    Promise.all(uploadTasks)
+      .then((taskResponses: UploadTaskSnapshot[]) => {
+        this.fulfilledChallengesService.submitFulfillChallenge({
+          id: this.challenge.id,
+          day: this.challenge.day,
+          type: this.challenge.type,
+          answers: taskResponses.map(taskResponse => taskResponse.ref.fullPath),
+        });
+      })
+      .catch(() => {})
+      .then(() => (this.uploading = false));
   }
 }
