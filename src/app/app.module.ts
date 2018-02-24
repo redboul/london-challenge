@@ -1,3 +1,4 @@
+import { DeleteAnswerComponent } from './delete-answer/delete-answer.component';
 import { ChallengeStorageService } from './challenge-storage.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -10,12 +11,20 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { MatButtonModule, MatIconModule, MatSidenavModule, MatToolbarModule, MatListModule, MatInputModule } from '@angular/material';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatDividerModule} from '@angular/material/divider';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  MatButtonModule,
+  MatIconModule,
+  MatSidenavModule,
+  MatToolbarModule,
+  MatListModule,
+  MatInputModule,
+} from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSelectModule } from '@angular/material/select';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AppComponent } from './app.component';
@@ -55,6 +64,7 @@ import { ChallengeDetailImageAnswerComponent } from './challenge-detail-image-an
     CalendarDayComponent,
     ChallengeDetailComponent,
     ChallengeDetailImageAnswerComponent,
+    DeleteAnswerComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,14 +81,18 @@ import { ChallengeDetailImageAnswerComponent } from './challenge-detail-image-an
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatDividerModule,
+    MatSelectModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('/ngsw-worker.js', {
+      enabled: environment.production,
+    }),
   ],
-  providers: [AuthenticationService,
+  providers: [
+    AuthenticationService,
     UserService,
     DayService,
     ChallengesService,
@@ -86,6 +100,6 @@ import { ChallengeDetailImageAnswerComponent } from './challenge-detail-image-an
     AppStatusService,
     ChallengeStorageService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

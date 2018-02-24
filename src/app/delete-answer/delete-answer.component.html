@@ -1,0 +1,18 @@
+<div class="deleteAnswer">
+  <button mat-fab color="warn" (click)="showConfirmDelete()">
+    <mat-icon aria-label="Delete answer">delete</mat-icon>
+  </button>
+</div>
+<div [@showConfirmDeleteState]="showConfirmDeleteState" class="deleteAnswerChoice">
+  <div class="deleteAnswerChoice-content">
+    <div class="deleteAnswerChoice-label">Are you sure you want to delete this answer ?</div>
+    <div class="deleteAnswerChoice-actions">
+      <button mat-fab color="primary" (click)="cancelDelete()">
+        <mat-icon>not_interested</mat-icon>
+      </button>
+      <button mat-fab (click)="confirmDelete()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

@@ -7,6 +7,16 @@
     </div>
   </div>
   <div class="day-challenges">
-      <app-challenge [challenge]="challenge" *ngFor="let challenge of challenges" (click)="goToChallenge(challenge)"></app-challenge>
+    <app-challenge [challenge]="challenge" *ngFor="let challenge of challenges" (click)="goToChallenge(challenge)"></app-challenge>
+  </div>
+
+  <div class="day-otherDays">
+    <mat-form-field>
+      <mat-select placeholder="All days" (selectionChange)="updateSelectedDay($event)" [(ngModel)]="dayId">
+        <mat-option *ngFor="let otherDay of dayList" [value]="otherDay.id">
+          {{ otherDay.labelShort }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 </div>

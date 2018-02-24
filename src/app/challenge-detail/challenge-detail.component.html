@@ -8,8 +8,11 @@
   <div class="challenge-text" *ngIf="isTextChallenge()">
     <div *ngIf="isChallengeFulfilled()">
       <div class="challenge-text-answersLabel">Your answers ({{fulfilledChallenge?.answers?.length}}):</div>
-      <div class="challenge-text-answer" *ngFor="let answer of fulfilledChallenge?.answers">
-        <p>{{answer}}</p>
+      <div class="challenge-text-answer z-depth-3" *ngFor="let answer of fulfilledChallenge?.answers">
+        <div class="textAnswer-content">
+          <p>{{answer}}</p>
+        </div>
+        <app-delete-answer (delete)="deleteAnswer(answer)"></app-delete-answer>
       </div>
     </div>
     <div class="challenge-text-form" *ngIf="!isAnswerLimitReached()">
