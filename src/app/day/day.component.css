@@ -13,3 +13,13 @@
   margin-top: 10px;
   font-size: 1.2em;
 }
+
+.day-otherDays {
+  display: flex;
+  justify-content: center;
+}
+
+.day-otherDays .mat-form-field {
+  margin: 20px 20px;
+  flex-grow: 1;
+}

@@ -10,23 +10,24 @@ import { DayComponent } from './day/day.component';
 
 export const ROUTES: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'calendar', children: [
-    { path: '', component: CalendarComponent },
-    { path: ':day', component: DayComponent },
-  ] },
+  {
+    path: 'calendar',
+    children: [
+      { path: '', component: CalendarComponent },
+      { path: ':day', component: DayComponent },
+    ],
+  },
   { path: 'permanentChallenges', component: ForeverChallengesComponent },
   { path: 'challenge/:challengeId', component: ChallengeDetailComponent },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(
-      ROUTES,
-      { enableTracing: true }
-    )
+    RouterModule.forRoot(ROUTES, {
+      enableTracing: true,
+      onSameUrlNavigation: 'reload',
+    }),
   ],
-  exports: [
-    RouterModule
-  ]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

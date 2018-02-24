@@ -16,7 +16,9 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class DayComponent implements OnInit, OnDestroy {
   challenges: Challenge[] = [];
+  allChallenges: Challenge[] = [];
   fulfilledChallenges: FulFilledChallenge[] = [];
+  allFulfilledChallenges: FulFilledChallenge[] = [];
   dayId: string;
   day: Day;
   dayList: Day[] = [];
@@ -41,24 +43,39 @@ export class DayComponent implements OnInit, OnDestroy {
     this.daySubscription = this.dayService.days$
       .filter(days => !!days)
       .subscribe(days => {
-        this.day = days.find(day => day.id === this.dayId);
         this.dayList = days;
+        this.updateCurrentDay();
       });
     this.challengesSubscription = this.challengesService.allChallenges$
       .filter(challenges => !!challenges)
       .subscribe(challenges => {
-        this.challenges = challenges.filter(
-          challenge => challenge.day === this.dayId,
-        );
+        this.allChallenges = challenges;
+        this.updateCurrentChallenges();
         this.appStatusService.available();
       });
     this.ffcsSubscription = this.fulfilledChallengeService.fulfilledChallenges$
       .filter(challenges => !!challenges)
       .subscribe(ffChallenges => {
-        this.fulfilledChallenges = ffChallenges
-          .filter(ffc => ffc.day === this.dayId)
-          .filter(ffc => ffc.answers && ffc.answers.length);
+        this.allFulfilledChallenges = ffChallenges;
+        this.updateFFChallenges();
       });
+  }
+
+  updateCurrentChallenges() {
+    this.challenges = this.allChallenges.filter(
+      challenge => challenge.day === this.dayId,
+    );
+    this.appStatusService.available();
+  }
+
+  updateCurrentDay() {
+    this.day = this.dayList.find(day => day.id === this.dayId);
+  }
+
+  updateFFChallenges() {
+    this.fulfilledChallenges = this.allFulfilledChallenges
+      .filter(ffc => ffc.day === this.dayId)
+      .filter(ffc => ffc.answers && ffc.answers.length);
   }
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
@@ -76,5 +93,8 @@ export class DayComponent implements OnInit, OnDestroy {
   }
   updateSelectedDay(selectedDay) {
     this.router.navigate(['calendar', selectedDay.value]);
+    this.updateCurrentDay();
+    this.updateFFChallenges();
+    this.updateCurrentChallenges();
   }
 }

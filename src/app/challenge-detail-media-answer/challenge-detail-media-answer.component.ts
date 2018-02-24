@@ -9,31 +9,24 @@ import {
 } from '@angular/animations';
 
 @Component({
-  selector: 'app-challenge-detail-image-answer',
-  templateUrl: './challenge-detail-image-answer.component.html',
-  styleUrls: ['./challenge-detail-image-answer.component.css'],
-  animations: [
-    trigger('showConfirmDeleteState', [
-      state('in', style({ transform: 'translateX(0)' })),
-      state('out', style({ transform: 'translateX(120%)' })),
-      transition('out <=> in', animate('250ms cubic-bezier(.35,0,.25,1)')),
-    ]),
-  ],
+  selector: 'app-challenge-detail-media-answer',
+  templateUrl: './challenge-detail-media-answer.component.html',
+  styleUrls: ['./challenge-detail-media-answer.component.css'],
 })
 export class ChallengeDetailMediaAnswerComponent {
   @Input() filePath;
   @Output() delete = new EventEmitter();
-  isImageLoaded = false;
+  isMediaLoaded = false;
   constructor(private challengeStorageService: ChallengeStorageService) {}
 
   getDownloadUrl(answer) {
     return this.challengeStorageService.getDownloadUrl(answer);
   }
-  imageLoaded() {
-    this.isImageLoaded = true;
+  mediaLoaded() {
+    this.isMediaLoaded = true;
   }
-  hasImageLoaded() {
-    return this.isImageLoaded;
+  hasmediaLoaded() {
+    return this.isMediaLoaded;
   }
   confirmDelete() {
     this.delete.next(this.filePath);

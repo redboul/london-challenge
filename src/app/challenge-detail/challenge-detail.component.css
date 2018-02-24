@@ -26,11 +26,13 @@
 }
 .textAnswer-content {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  width: calc(100% - 75px);
 }
 .textAnswer-content p {
-  padding: 10px;
+  padding: 20px;
+  margin: 0;
 }
 
 .challenge-description {
