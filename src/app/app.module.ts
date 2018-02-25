@@ -1,3 +1,4 @@
+import { ChallengeDetailMediaAnswerComponent } from './challenge-detail-media-answer/challenge-detail-media-answer.component';
 import { DeleteAnswerComponent } from './delete-answer/delete-answer.component';
 import { ChallengeStorageService } from './challenge-storage.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -64,6 +65,7 @@ import { ChallengeDetailImageAnswerComponent } from './challenge-detail-image-an
     CalendarDayComponent,
     ChallengeDetailComponent,
     ChallengeDetailImageAnswerComponent,
+    ChallengeDetailMediaAnswerComponent,
     DeleteAnswerComponent,
   ],
   imports: [

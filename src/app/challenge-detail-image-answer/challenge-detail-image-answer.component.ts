@@ -20,7 +20,7 @@ import {
     ]),
   ],
 })
-export class ChallengeDetailMediaAnswerComponent {
+export class ChallengeDetailImageAnswerComponent {
   @Input() filePath;
   @Output() delete = new EventEmitter();
   isImageLoaded = false;

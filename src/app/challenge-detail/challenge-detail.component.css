@@ -48,3 +48,13 @@
   margin: 20px 0;
   text-align: right;
 }
+
+.challenge-media-form {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.challenge-media-form .mat-raised-button {
+  font-size: 1.2rem;
+  line-height: 3rem;
+}

@@ -1,5 +1,13 @@
+import { Subscription } from 'rxjs/Subscription';
 import { ChallengeStorageService } from './../challenge-storage.service';
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  EventEmitter,
+  Output,
+  OnDestroy,
+} from '@angular/core';
 import {
   trigger,
   state,
@@ -13,22 +21,22 @@ import {
   templateUrl: './challenge-detail-media-answer.component.html',
   styleUrls: ['./challenge-detail-media-answer.component.css'],
 })
-export class ChallengeDetailMediaAnswerComponent {
+export class ChallengeDetailMediaAnswerComponent implements OnInit, OnDestroy {
   @Input() filePath;
   @Output() delete = new EventEmitter();
-  isMediaLoaded = false;
+  storageSubscription: Subscription;
+  data;
   constructor(private challengeStorageService: ChallengeStorageService) {}
 
-  getDownloadUrl(answer) {
-    return this.challengeStorageService.getDownloadUrl(answer);
-  }
-  mediaLoaded() {
-    this.isMediaLoaded = true;
-  }
-  hasmediaLoaded() {
-    return this.isMediaLoaded;
-  }
   confirmDelete() {
     this.delete.next(this.filePath);
+  }
+  ngOnInit() {
+    this.storageSubscription = this.challengeStorageService
+      .getFileMetadata(this.filePath)
+      .subscribe(data => (this.data = data));
+  }
+  ngOnDestroy() {
+    this.storageSubscription.unsubscribe();
   }
 }
