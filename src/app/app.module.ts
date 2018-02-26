@@ -49,6 +49,8 @@ import { ChallengeComponent } from './challenge/challenge.component';
 import { CalendarDayComponent } from './calendar-day/calendar-day.component';
 import { ChallengeDetailComponent } from './challenge-detail/challenge-detail.component';
 import { ChallengeDetailImageAnswerComponent } from './challenge-detail-image-answer/challenge-detail-image-answer.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { TeamStatusComponent } from './team-status/team-status.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +69,8 @@ import { ChallengeDetailImageAnswerComponent } from './challenge-detail-image-an
     ChallengeDetailImageAnswerComponent,
     ChallengeDetailMediaAnswerComponent,
     DeleteAnswerComponent,
+    ResetPasswordComponent,
+    TeamStatusComponent,
   ],
   imports: [
     BrowserModule,

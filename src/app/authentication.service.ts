@@ -8,7 +8,9 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 export class AuthenticationService {
   authenticatedUser$ = new BehaviorSubject(this.afAuth.auth.currentUser);
   constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) {
-    this.afAuth.auth.onAuthStateChanged(user => this.authenticatedUser$.next(user));
+    this.afAuth.auth.onAuthStateChanged(user =>
+      this.authenticatedUser$.next(user),
+    );
   }
 
   isAuthenticated() {
@@ -19,13 +21,19 @@ export class AuthenticationService {
     return this.afAuth.auth.currentUser && this.afAuth.auth.currentUser.uid;
   }
 
-  login(user: {email: string, password: string}): Promise<any> {
-    return this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)
-    .then(fUser => {
-      console.log('logged in with user', fUser.uid);
-    });
+  login(user: { email: string; password: string }): Promise<any> {
+    return this.afAuth.auth
+      .signInWithEmailAndPassword(user.email, user.password)
+      .then(fUser => {
+        console.log('logged in with user', fUser.uid);
+      });
   }
   logout() {
     this.afAuth.auth.signOut();
+  }
+  resetPassword(email: string): Promise<any> {
+    return this.afAuth.auth
+      .sendPasswordResetEmail(email)
+      .then(() => 'An email has been send for you to reset your password');
   }
 }

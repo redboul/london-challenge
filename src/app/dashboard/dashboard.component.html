@@ -1,5 +1,3 @@
 <div class="dashboard">
-  <div class="dashboard-currentTeamName">{{user?.teamName}}</div>
-  <mat-progress-bar mode="determinate" [value]="getProgress()"></mat-progress-bar>
-  <div class="dashboard-currentProgress">{{fulfilledChallengesSize}}/{{challengesSize}}</div>
+  <app-team-status *ngIf="user" [teamName]="user.teamName"></app-team-status>
 </div>

@@ -12,15 +12,9 @@ import { AppStatusService } from '../app-status.service';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   user;
-  fulfilledChallengesSize;
-  challengesSize;
-  challengeSizeSubscription: Subscription;
-  fulfilledChallengesSizeSubscription: Subscription;
   userSubscription: Subscription;
   constructor(
     private userService: UserService,
-    private challengesService: ChallengesService,
-    private fulfilledChallenges: FulfilledChallengesService,
     private appStatusService: AppStatusService,
   ) {}
 
@@ -31,20 +25,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.user = user;
         this.appStatusService.available();
       });
-    this.fulfilledChallengesSizeSubscription = this.fulfilledChallenges.size$.subscribe(
-      size => (this.fulfilledChallengesSize = size),
-    );
-    this.challengeSizeSubscription = this.challengesService.allChallenges$
-      .filter(cs => !!cs)
-      .subscribe(cs => (this.challengesSize = cs.length));
   }
 
   ngOnDestroy() {
-    this.challengeSizeSubscription.unsubscribe();
-    this.fulfilledChallengesSizeSubscription.unsubscribe();
     this.userSubscription.unsubscribe();
-  }
-  getProgress() {
-    return this.fulfilledChallengesSize * 100 / this.challengesSize;
   }
 }

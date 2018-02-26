@@ -1,3 +1,4 @@
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ChallengeDetailComponent } from './challenge-detail/challenge-detail.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -17,6 +18,7 @@ export const ROUTES: Routes = [
       { path: ':day', component: DayComponent },
     ],
   },
+  { path: 'forgotten-password', component: ResetPasswordComponent },
   { path: 'permanentChallenges', component: ForeverChallengesComponent },
   { path: 'challenge/:challengeId', component: ChallengeDetailComponent },
 ];

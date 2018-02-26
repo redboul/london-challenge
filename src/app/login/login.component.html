@@ -2,17 +2,19 @@
   <h1 class="loginTitle">
     Do you have what it takes?
   </h1>
-  <form class="loginForm" (ngSubmit)="login()" >
+  <form class="loginForm" (ngSubmit)="login()">
     <div class="loginForm-fields">
       <mat-form-field>
         <input matInput placeholder="Login" [formControl]="emailFormControl" [(ngModel)]="user.email">
       </mat-form-field>
-      
+
       <mat-form-field>
         <input matInput placeholder="Password" [type]="'password'" [formControl]="passwordFormControl" [(ngModel)]="user.password">
       </mat-form-field>
     </div>
     <button mat-raised-button type="submit" [color]="'primary'">Indeed I have !</button>
   </form>
+  <div class="login-forgottenPassword"></div>
+  <a [routerLink]="['/forgotten-password']">Forgot your password?</a>
   <img width="220" alt="London Challenge Logo" src="/assets/images/icon.png">
 </div>

@@ -2,7 +2,7 @@
   text-align: center;
 }
 .loginForm {
-   /* display: flex; */
+  /* display: flex; */
   flex-direction: column;
   margin: 20px;
 }
