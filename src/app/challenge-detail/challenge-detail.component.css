@@ -12,6 +12,19 @@
   text-align: right;
   font-size: 1.2rem;
 }
+.challenge-description {
+  text-align: justify;
+  margin: 10px 0;
+}
+.challenge-image {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.challenge-image img {
+  max-width: 80%;
+  max-height: 300px;
+}
 
 .challenge-media-answersLabel,
 .challenge-text-answersLabel {
@@ -33,10 +46,6 @@
 .textAnswer-content p {
   padding: 20px;
   margin: 0;
-}
-
-.challenge-description {
-  margin: 10px 0;
 }
 
 .challenge-text-form .mat-form-field {

@@ -31,6 +31,11 @@ async function saveOrUpdateChallenge() {
     },
     {
       type: 'input',
+      name: 'image',
+      message: 'Image name:',
+    },
+    {
+      type: 'input',
       name: 'day',
       message: 'Day (YYYY-MM-DD):',
     },
@@ -46,17 +51,22 @@ async function saveOrUpdateChallenge() {
       choices: [
         {
           name: 'text',
-          value: 2,
+          value: 1,
         },
         {
           name: 'image',
-          value: 1,
+          value: 2,
         },
         {
           name: 'media',
           value: 3,
         },
       ],
+    },
+    {
+      type: 'input',
+      name: 'allowedAnswer',
+      message: 'How many answers allowed ?',
     },
   ]);
   console.log(answer);
@@ -70,6 +80,12 @@ async function saveOrUpdateChallenge() {
       day: answer.day,
       dayLabel: answer.dayLabel,
       type: answer.type,
+      image: answer.image,
+      maxAnswers:
+        (answer.allowedAnswer &&
+          answer.allowedAnswer.length &&
+          answer.allowedAnswer) ||
+        1,
     })
     .catch(err => console.log(err));
 }

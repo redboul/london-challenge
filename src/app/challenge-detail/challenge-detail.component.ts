@@ -58,7 +58,6 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
       );
     this.appStatusSubscription = Observable.zip(
       this.challengesService.allChallenges$.filter(challenges => !!challenges),
-      this.route.paramMap,
       this.fulfilledChallengesService.fulfilledChallenges$.filter(
         ffcs => !!ffcs,
       ),

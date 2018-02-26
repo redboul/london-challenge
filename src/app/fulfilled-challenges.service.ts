@@ -31,17 +31,19 @@ export class FulfilledChallengesService {
     this.updateFulfilledChallenges();
   }
   updateFulfilledChallenges() {
-    this.fulfilledChallengesRef.get().then(fulfilledChallenges => {
-      console.log(fulfilledChallenges);
-      this.fulfilledChallenges = fulfilledChallenges;
-      this.fulfilledChallenges$.next(
-        this.fulfilledChallenges.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-        })),
-      );
-      this.size$.next(this.fulfilledChallenges.size);
-    });
+    this.fulfilledChallengesRef
+      .get()
+      .then((fulfilledChallenges: FulFilledChallenge[]) => {
+        this.fulfilledChallenges = fulfilledChallenges;
+        const ffcs = this.fulfilledChallenges.docs
+          .map(doc => ({
+            id: doc.id,
+            ...doc.data(),
+          }))
+          .filter(_ffcs => _ffcs && _ffcs.answers && _ffcs.answers.length);
+        this.fulfilledChallenges$.next(ffcs);
+        this.size$.next(ffcs.length);
+      });
   }
   submitFulfillChallenge(fulfillChallenge: FulFilledChallenge) {
     this.fulfilledChallengesCollection.doc(fulfillChallenge.id).set(
