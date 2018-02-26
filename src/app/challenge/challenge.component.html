@@ -1,8 +1,11 @@
-<div class="challenge">
+<div class="challenge" [class.fulfilled]="isChallengeFulfilled()">
   <div class="challenge-title">{{challenge.label}}</div>
   <div *ngIf="isChallengeFulfilled()">
 
   </div>
-  <div class="challenge-detailsAction"><mat-icon>keyboard_arrow_right
-    </mat-icon></div>
+  <div class="challenge-detailsAction">
+    <mat-icon *ngIf="!isChallengeFulfilled()">keyboard_arrow_right
+    </mat-icon>
+    <mat-icon *ngIf="isChallengeFulfilled()">check</mat-icon>
+  </div>
 </div>

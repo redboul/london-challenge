@@ -4,7 +4,8 @@
   align-items: center;
   padding: 10px 20px;
   margin: 1px 0;
-  box-shadow: 0 2px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  box-shadow: 0 2px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 
 .challenge-title {
@@ -13,13 +14,18 @@
   text-overflow: ellipsis;
   max-width: 85%;
   overflow: hidden;
+  flex-grow: 1;
+}
+.challenge.fulfilled {
+  color: #fff;
+  background-color: green;
 }
 
 .challenge-detailsAction {
   height: 40px;
 }
 
-.challenge-detailsAction .material-icons{
+.challenge-detailsAction .material-icons {
   font-size: 2.5rem;
   height: 40px;
   width: 40px;
