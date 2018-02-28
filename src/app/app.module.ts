@@ -1,3 +1,4 @@
+import { UserGuard } from './user-route-guard.service';
 import { ChallengeDetailMediaAnswerComponent } from './challenge-detail-media-answer/challenge-detail-media-answer.component';
 import { DeleteAnswerComponent } from './delete-answer/delete-answer.component';
 import { ChallengeStorageService } from './challenge-storage.service';
@@ -105,6 +106,7 @@ import { TeamStatusComponent } from './team-status/team-status.component';
     FulfilledChallengesService,
     AppStatusService,
     ChallengeStorageService,
+    UserGuard,
   ],
   bootstrap: [AppComponent],
 })

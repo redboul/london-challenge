@@ -1,3 +1,4 @@
+import { User } from './../user';
 import { AppStatusService } from './../app-status.service';
 import { FulfilledChallengesService } from './../fulfilled-challenges.service';
 import { ChallengesService } from './../challenges.service';
@@ -10,20 +11,21 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
   styleUrls: ['./team-status.component.css'],
 })
 export class TeamStatusComponent implements OnInit, OnDestroy {
-  @Input() teamName;
-  fulfilledChallengesSize;
+  @Input() teamUser: User;
+  fulfilledChallengesSize = 0;
   challengesSize;
   challengeSizeSubscription: Subscription;
-  fulfilledChallengesSizeSubscription: Subscription;
+  sizePromise: Promise<number>;
   constructor(
     private challengesService: ChallengesService,
     private fulfilledChallenges: FulfilledChallengesService,
   ) {}
 
   ngOnInit() {
-    this.fulfilledChallengesSizeSubscription = this.fulfilledChallenges.size$.subscribe(
-      size => (this.fulfilledChallengesSize = size),
+    this.sizePromise = this.fulfilledChallenges.getFulFilledChallengesSize(
+      this.teamUser,
     );
+    this.sizePromise.then(size => (this.fulfilledChallengesSize = size));
     this.challengeSizeSubscription = this.challengesService.allChallenges$
       .filter(cs => !!cs)
       .subscribe(cs => (this.challengesSize = cs.length));
@@ -31,7 +33,6 @@ export class TeamStatusComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.challengeSizeSubscription.unsubscribe();
-    this.fulfilledChallengesSizeSubscription.unsubscribe();
   }
   getProgress() {
     return this.fulfilledChallengesSize * 100 / this.challengesSize;

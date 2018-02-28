@@ -11,23 +11,23 @@ import { AppStatusService } from '../app-status.service';
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  user;
-  userSubscription: Subscription;
+  users;
+  usersSubscription: Subscription;
   constructor(
     private userService: UserService,
     private appStatusService: AppStatusService,
   ) {}
 
   ngOnInit() {
-    this.userSubscription = this.userService.user$
-      .filter(user => !!user)
-      .subscribe(user => {
-        this.user = user;
+    this.usersSubscription = this.userService.users$
+      .filter(users => !!users)
+      .subscribe(users => {
+        this.users = users;
         this.appStatusService.available();
       });
   }
 
   ngOnDestroy() {
-    this.userSubscription.unsubscribe();
+    this.usersSubscription.unsubscribe();
   }
 }

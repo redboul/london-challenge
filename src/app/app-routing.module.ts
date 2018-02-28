@@ -1,3 +1,4 @@
+import { UserGuard } from './user-route-guard.service';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ChallengeDetailComponent } from './challenge-detail/challenge-detail.component';
 import { NgModule } from '@angular/core';
@@ -11,16 +12,22 @@ import { DayComponent } from './day/day.component';
 
 export const ROUTES: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'forgotten-password', component: ResetPasswordComponent },
   {
-    path: 'calendar',
+    path: ':uuid',
+    canActivateChild: [UserGuard],
     children: [
-      { path: '', component: CalendarComponent },
-      { path: ':day', component: DayComponent },
+      {
+        path: 'calendar',
+        children: [
+          { path: '', component: CalendarComponent },
+          { path: ':day', component: DayComponent },
+        ],
+      },
+      { path: 'permanentChallenges', component: ForeverChallengesComponent },
+      { path: 'challenge/:challengeId', component: ChallengeDetailComponent },
     ],
   },
-  { path: 'forgotten-password', component: ResetPasswordComponent },
-  { path: 'permanentChallenges', component: ForeverChallengesComponent },
-  { path: 'challenge/:challengeId', component: ChallengeDetailComponent },
 ];
 
 @NgModule({

@@ -1,24 +1,21 @@
 import { Injectable } from '@angular/core';
-import { User } from 'firebase/app';
 
 import { AngularFirestore } from 'angularfire2/firestore';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { UserService } from './user.service';
 import { QuerySnapshot, Query } from 'firebase/firestore';
 import { FulFilledChallenge } from './fulfilled-challenge';
+import { User } from './user';
 
 @Injectable()
 export class FulfilledChallengesService {
+  private users: User[];
   private fulfilledChallenges: QuerySnapshot;
   private fulfilledChallengesRef: Query;
   private fulfilledChallengesCollection;
   size$ = new BehaviorSubject(0);
   fulfilledChallenges$ = new BehaviorSubject<FulFilledChallenge[]>(null);
-  constructor(userService: UserService, private db: AngularFirestore) {
-    userService.user$.filter(user => !!user).subscribe(user => {
-      this.retrieveFulFilledChallenges(user);
-    });
-  }
+  constructor(private db: AngularFirestore) {}
 
   retrieveFulFilledChallenges(user) {
     this.fulfilledChallengesCollection = this.db.collection(
@@ -29,6 +26,12 @@ export class FulfilledChallengesService {
       console.log(docSnapshot);
     });
     this.updateFulfilledChallenges();
+  }
+  getFulFilledChallengesSize(user): Promise<number> {
+    return this.db
+      .collection(`users/${user.email}/fulfilledChallenges`)
+      .ref.get()
+      .then(ffcs => ffcs.size);
   }
   updateFulfilledChallenges() {
     this.fulfilledChallengesRef
