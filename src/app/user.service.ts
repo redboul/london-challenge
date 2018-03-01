@@ -9,7 +9,9 @@ import { User as LondonChallengeUser, AccountType } from './user';
 @Injectable()
 export class UserService {
   users$ = new BehaviorSubject<LondonChallengeUser[]>(null);
-  user$ = new BehaviorSubject<LondonChallengeUser>(null);
+  currentUser$ = new BehaviorSubject<LondonChallengeUser>(null);
+  authenticatedUser: LondonChallengeUser;
+  currentUser: LondonChallengeUser;
   constructor(
     private authenticationService: AuthenticationService,
     private db: AngularFirestore,
@@ -17,19 +19,28 @@ export class UserService {
     authenticationService.authenticatedUser$
       .filter(user => !!user)
       .subscribe(user => {
-        this.retrieveUsersRights(user);
+        this.retrieveUsersRights();
+        this.retrieveUserRights(user.email).then(u => {
+          this.authenticatedUser = u;
+          this.setCurrentUser(u);
+        });
       });
   }
-
-  public isCurrentUserAuthorized(uuid: string): Promise<boolean> {
-    return this.user$
-      .filter(user => !!user)
-      .map(user => user.uuid === uuid || user.accountType === AccountType.admin)
-      .toPromise();
+  setCurrentUser(user: LondonChallengeUser) {
+    this.currentUser = user;
+    this.currentUser$.next(user);
   }
 
-  retrieveUserRights(fUser: User): Promise<LondonChallengeUser> {
-    const userRef = this.db.collection('users').doc(fUser.email).ref;
+  public isCurrentUserAuthorized(uuid: string): boolean {
+    return (
+      this.currentUser &&
+      (this.currentUser.uuid === uuid ||
+        this.currentUser.accountType === AccountType.admin)
+    );
+  }
+
+  retrieveUserRights(email: string): Promise<LondonChallengeUser> {
+    const userRef = this.db.collection('users').doc(email).ref;
     return userRef
       .get()
       .then(
@@ -37,7 +48,7 @@ export class UserService {
       );
   }
 
-  retrieveUsersRights(fUser: User) {
+  retrieveUsersRights() {
     const usersRef = this.db.collection('users').ref;
     usersRef
       .get()

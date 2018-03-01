@@ -1,0 +1,6 @@
+<div class="currentUser" *ngIf="currentUser">
+  <div class="currentUser-logo" *ngIf="currentUser?.logo">
+    <img [src]="'/assets/images/'+currentUser.logo">
+  </div>
+  <div class="currentUser-teamName">{{currentUser?.teamName}}</div>
+</div>

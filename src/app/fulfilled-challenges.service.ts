@@ -15,16 +15,17 @@ export class FulfilledChallengesService {
   private fulfilledChallengesCollection;
   size$ = new BehaviorSubject(0);
   fulfilledChallenges$ = new BehaviorSubject<FulFilledChallenge[]>(null);
-  constructor(private db: AngularFirestore) {}
+  constructor(private db: AngularFirestore, private userService: UserService) {
+    userService.currentUser$
+      .filter(u => !!u)
+      .subscribe(u => this.retrieveFulFilledChallenges(u));
+  }
 
   retrieveFulFilledChallenges(user) {
     this.fulfilledChallengesCollection = this.db.collection(
       `users/${user.email}/fulfilledChallenges`,
     );
     this.fulfilledChallengesRef = this.fulfilledChallengesCollection.ref;
-    this.fulfilledChallengesRef.onSnapshot(docSnapshot => {
-      console.log(docSnapshot);
-    });
     this.updateFulfilledChallenges();
   }
   getFulFilledChallengesSize(user): Promise<number> {

@@ -4,8 +4,8 @@
   <mat-sidenav #snav>
     <mat-nav-list (click)="snav.close()">
       <a mat-list-item routerLink="/">Home</a>
-      <a mat-list-item *ngIf="isAuthenticated()" routerLink="/permanentChallenges">Challenges</a>
-      <a mat-list-item *ngIf="isAuthenticated()" routerLink="/calendar">Calendar</a>
+      <a mat-list-item *ngIf="isAuthenticated()" routerLink="/{{currentUser?.uuid}}/permanentChallenges">Challenges</a>
+      <a mat-list-item *ngIf="isAuthenticated()" routerLink="/{{currentUser?.uuid}}/calendar">Calendar</a>
       <a mat-list-item *ngIf="isAuthenticated()" (click)="logout()">Logout</a>
     </mat-nav-list>
   </mat-sidenav>
@@ -13,6 +13,7 @@
     <app-loading></app-loading>
     <div [hidden]="isAppWorking()" class="appContent">
       <router-outlet></router-outlet>
+      <app-current-user></app-current-user>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

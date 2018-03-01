@@ -1,3 +1,4 @@
+import { UserService } from './user.service';
 import { AuthenticationService } from './authentication.service';
 import {
   AngularFireStorage,
@@ -13,11 +14,11 @@ export class ChallengeStorageService {
   downloadMetadataCache = new Map<string, Observable<any>>();
   constructor(
     private storage: AngularFireStorage,
-    private authenticationService: AuthenticationService,
+    private userService: UserService,
   ) {}
   addFile(file: File): AngularFireUploadTask {
     return this.storage.upload(
-      `users/${this.authenticationService.userId()}/${file.name}`,
+      `users/${this.userService.currentUser.email}/${file.name}`,
       file,
     );
   }

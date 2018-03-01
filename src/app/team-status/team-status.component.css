@@ -1,5 +1,7 @@
 .teamStatus {
   display: flex;
+  padding-right: 10px;
+  margin-top: 10px;
 }
 .teamStatus-progress {
   flex-grow: 1;

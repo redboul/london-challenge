@@ -1,7 +1,7 @@
 <div class="challenge">
   <div class="challenge-title">{{challenge?.label}}</div>
   <div class="challenge-day" *ngIf="challenge?.day">on the
-    <a routerLink="/calendar/{{challenge.day}}">{{challenge.dayLabel}}</a>
+    <a routerLink="../../calendar/{{challenge.day}}">{{challenge.dayLabel}}</a>
   </div>
   <div class="challenge-description">{{challenge?.description}}</div>
   <div *ngIf="challenge &amp;&amp; challenge.image &amp;&amp; challenge.image.length" class="challenge-image">

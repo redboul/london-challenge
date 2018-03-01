@@ -1,0 +1,22 @@
+.currentUser {
+  position: fixed;
+  display: flex;
+  bottom: 0;
+  left: 0;
+  padding: 10px 0;
+  width: 100%;
+  justify-content: center;
+  background-color: #ddd;
+}
+.currentUser-teamName {
+  text-align: center;
+  font-size: 1.5rem;
+}
+.currentUser-logo {
+  margin-right: 20px;
+  text-align: center;
+}
+.currentUser-logo img {
+  max-width: 60px;
+  max-height: 30px;
+}

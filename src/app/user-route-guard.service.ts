@@ -12,7 +12,7 @@ export class UserGuard implements CanActivateChild {
   canActivateChild(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
-  ): Promise<boolean> {
+  ): boolean {
     return this.userService.isCurrentUserAuthorized(route.params.uuid);
   }
 }

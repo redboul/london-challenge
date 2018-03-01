@@ -1,4 +1,5 @@
-import { User } from './../user';
+import { UserService } from './../user.service';
+import { User, AccountType } from './../user';
 import { AppStatusService } from './../app-status.service';
 import { FulfilledChallengesService } from './../fulfilled-challenges.service';
 import { ChallengesService } from './../challenges.service';
@@ -17,6 +18,7 @@ export class TeamStatusComponent implements OnInit, OnDestroy {
   challengeSizeSubscription: Subscription;
   sizePromise: Promise<number>;
   constructor(
+    private userService: UserService,
     private challengesService: ChallengesService,
     private fulfilledChallenges: FulfilledChallengesService,
   ) {}
@@ -36,5 +38,10 @@ export class TeamStatusComponent implements OnInit, OnDestroy {
   }
   getProgress() {
     return this.fulfilledChallengesSize * 100 / this.challengesSize;
+  }
+  setCurrentUser() {
+    if (this.userService.authenticatedUser.accountType === AccountType.admin) {
+    }
+    this.userService.setCurrentUser(this.teamUser);
   }
 }

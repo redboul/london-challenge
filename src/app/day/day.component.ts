@@ -26,6 +26,7 @@ export class DayComponent implements OnInit, OnDestroy {
   daySubscription: Subscription;
   ffcsSubscription: Subscription;
   challengesSubscription: Subscription;
+  userUuid: string;
   constructor(
     private appStatusService: AppStatusService,
     private dayService: DayService,
@@ -34,9 +35,10 @@ export class DayComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
   ) {
-    this.paramsSubscription = this.route.params.subscribe(
-      params => (this.dayId = params.day),
-    );
+    this.paramsSubscription = this.route.params.subscribe(params => {
+      this.dayId = params.day;
+      this.userUuid = params.uuid;
+    });
   }
 
   ngOnInit() {
@@ -89,10 +91,10 @@ export class DayComponent implements OnInit, OnDestroy {
       : 0;
   }
   goToChallenge(challenge: Challenge) {
-    this.router.navigate(['challenge', challenge.id]);
+    this.router.navigate([this.userUuid, 'challenge', challenge.id]);
   }
   updateSelectedDay(selectedDay) {
-    this.router.navigate(['calendar', selectedDay.value]);
+    this.router.navigate([this.userUuid, 'calendar', selectedDay.value]);
     this.updateCurrentDay();
     this.updateFFChallenges();
     this.updateCurrentChallenges();
