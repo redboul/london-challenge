@@ -7,6 +7,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class ChallengeStorageService {
@@ -15,7 +16,7 @@ export class ChallengeStorageService {
   constructor(
     private storage: AngularFireStorage,
     private userService: UserService,
-  ) {}
+  ) { }
   addFile(file: File): AngularFireUploadTask {
     return this.storage.upload(
       `users/${this.userService.currentUser.email}/${file.name}`,
@@ -29,7 +30,10 @@ export class ChallengeStorageService {
         this.storage.ref(filePath).getDownloadURL(),
       );
     }
-    return this.downloadUrlCache.get(filePath);
+    return this.downloadUrlCache.get(filePath).catch(() => {
+      console.log('impossible d\'uploader le fichier');
+      return Observable.of('failure');
+    });
   }
 
   deleteFile(filePath: string) {

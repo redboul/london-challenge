@@ -24,10 +24,14 @@ export class ChallengeDetailImageAnswerComponent {
   @Input() filePath;
   @Output() delete = new EventEmitter();
   isImageLoaded = false;
-  constructor(private challengeStorageService: ChallengeStorageService) {}
+  constructor(private challengeStorageService: ChallengeStorageService) { }
 
   getDownloadUrl(answer) {
-    return this.challengeStorageService.getDownloadUrl(answer);
+    return this.challengeStorageService.getDownloadUrl(answer).do(value => {
+      if (value === 'failure') {
+        console.log('echec...');
+      }
+    });
   }
   imageLoaded() {
     this.isImageLoaded = true;

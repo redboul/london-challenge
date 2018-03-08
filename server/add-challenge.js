@@ -13,8 +13,7 @@ console.log('Script to add or update a London challenge');
 saveOrUpdateChallenge();
 
 async function saveOrUpdateChallenge() {
-  const answer = await inquirer.prompt([
-    {
+  const answer = await inquirer.prompt([{
       type: 'input',
       name: 'identifier',
       message: 'Identifiant:',
@@ -41,15 +40,19 @@ async function saveOrUpdateChallenge() {
     },
     {
       type: 'input',
+      name: 'category',
+      message: 'Category:',
+    },
+    {
+      type: 'input',
       name: 'dayLabel',
-      message: 'Day label shown:',
+      message: 'Day label shown (MMMM, dd\'th\'):',
     },
     {
       type: 'list',
       name: 'type',
       message: 'Challenge expected answer ?',
-      choices: [
-        {
+      choices: [{
           name: 'text',
           value: 1,
         },
@@ -81,6 +84,7 @@ async function saveOrUpdateChallenge() {
       dayLabel: answer.dayLabel,
       type: answer.type,
       image: answer.image,
+      category: answer.category,
       maxAnswers:
         (answer.allowedAnswer &&
           answer.allowedAnswer.length &&
