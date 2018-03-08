@@ -8,6 +8,7 @@ import { FulfilledChallengesService } from '../fulfilled-challenges.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppStatusService } from '../app-status.service';
 import { Subscription } from 'rxjs/Subscription';
+import { groupBy } from 'lodash';
 
 @Component({
   selector: 'app-day',
@@ -16,6 +17,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class DayComponent implements OnInit, OnDestroy {
   challenges: Challenge[] = [];
+  challengesByCategory: any[][] = [];
   allChallenges: Challenge[] = [];
   fulfilledChallenges: FulFilledChallenge[] = [];
   allFulfilledChallenges: FulFilledChallenge[] = [];
@@ -67,6 +69,7 @@ export class DayComponent implements OnInit, OnDestroy {
     this.challenges = this.allChallenges.filter(
       challenge => challenge.day === this.dayId,
     );
+    this.challengesByCategory = Object.entries(groupBy(this.challenges, 'category'));
     this.appStatusService.available();
   }
 

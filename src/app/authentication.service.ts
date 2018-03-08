@@ -23,10 +23,7 @@ export class AuthenticationService {
 
   login(user: { email: string; password: string }): Promise<any> {
     return this.afAuth.auth
-      .signInWithEmailAndPassword(user.email, user.password)
-      .then(fUser => {
-        console.log('logged in with user', fUser.uid);
-      });
+      .signInWithEmailAndPassword(user.email, user.password);
   }
   logout() {
     this.afAuth.auth.signOut();

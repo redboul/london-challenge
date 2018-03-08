@@ -1,3 +1,10 @@
 <div class="foreverChallenges">
+  <h2>All week long challenges</h2>
+  <div class="week-progressBar">
+    <mat-progress-bar mode="determinate" [value]="fulfilledChallengesPercentage()"></mat-progress-bar>
+    <div class="week-progressBar-status">
+      {{fulfilledForeverChallenges?.length}}/{{challenges?.length}}
+    </div>
+  </div>
   <app-challenge [challenge]="challenge" *ngFor="let challenge of challenges" (click)="goToChallenge(challenge)"></app-challenge>
 </div>

@@ -7,7 +7,10 @@
     </div>
   </div>
   <div class="day-challenges">
-    <app-challenge [challenge]="challenge" *ngFor="let challenge of challenges" (click)="goToChallenge(challenge)"></app-challenge>
+    <div class="day-challenges-category" *ngFor="let categoryAndChallenges of challengesByCategory">
+      <div class="day-challenges-categoryLabel">{{categoryAndChallenges[0]}}</div>
+      <app-challenge [challenge]="challenge" *ngFor="let challenge of categoryAndChallenges[1]" (click)="goToChallenge(challenge)"></app-challenge>
+    </div>
   </div>
 
   <div class="day-otherDays">

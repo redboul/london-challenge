@@ -1,9 +1,11 @@
+import { FulfilledChallengesService } from './../fulfilled-challenges.service';
 import { Subscription } from 'rxjs/Subscription';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChallengesService } from '../challenges.service';
 import { AppStatusService } from '../app-status.service';
 import { Challenge } from '../challenge';
+import { FulFilledChallenge } from '../fulfilled-challenge';
 
 @Component({
   selector: 'app-forever-challenges',
@@ -12,12 +14,16 @@ import { Challenge } from '../challenge';
 })
 export class ForeverChallengesComponent implements OnInit, OnDestroy {
   challenges: Challenge[] = [];
+  fulfilledForeverChallenges: FulFilledChallenge[] = [];
   foreverChallengesSubscription: Subscription;
+  fulfilledForeverChallengesSubscription: Subscription;
   constructor(
     private challengesService: ChallengesService,
+    private fulfilledChallengesService: FulfilledChallengesService,
     private appStatusService: AppStatusService,
     private router: Router,
-  ) {}
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
     this.foreverChallengesSubscription = this.challengesService.foreverChallenges$
@@ -26,12 +32,24 @@ export class ForeverChallengesComponent implements OnInit, OnDestroy {
         this.challenges = challenges;
         this.appStatusService.available();
       });
+    this.fulfilledForeverChallengesSubscription = this.fulfilledChallengesService.fulfilledChallenges$
+      .filter(challenges => !!challenges)
+      .subscribe(ffcs => {
+        this.fulfilledForeverChallenges = ffcs.filter(ffc => !ffc.day);
+      });
   }
 
   ngOnDestroy() {
     this.foreverChallengesSubscription.unsubscribe();
+    this.fulfilledForeverChallengesSubscription.unsubscribe();
   }
   goToChallenge(challenge: Challenge) {
-    this.router.navigate(['challenge', challenge.id]);
+    this.router.navigate(['..', 'challenge', challenge.id], { relativeTo: this.route });
+  }
+
+  fulfilledChallengesPercentage() {
+    return this.fulfilledForeverChallenges && this.challenges
+      ? this.fulfilledForeverChallenges.length * 100 / this.challenges.length
+      : 0;
   }
 }

@@ -3,6 +3,13 @@
   margin: 20px;
 }
 
+.day-challenges-categoryLabel {
+  font-size: 1.2rem;
+  text-align: center;
+  background-color: #AAF;
+  margin: 20px;
+}
+
 .day-progressBar {
   margin: 20px;
 }

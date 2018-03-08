@@ -9,6 +9,7 @@ export interface Challenge {
   day?: string;
   dayLabel?: string;
   image?: string;
+  category?: string;
   description: string;
   multiple: boolean;
   label: string;

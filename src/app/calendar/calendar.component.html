@@ -2,3 +2,10 @@
   <app-calendar-day *ngFor="let day of days;" [day]="day">
   </app-calendar-day>
 </div>
+<div class="week">
+  <a class="week-link" mat-raised-button color="primary" (click)="goToPermanentChallenges()">
+    <span class="title">All week long Challenges</span>
+    <br>
+    <span class="progress">{{fulfilledForeverChallenges?.length}}/{{foreverChallenges?.length}}</span>
+  </a>
+</div>
