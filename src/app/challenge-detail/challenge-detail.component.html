@@ -1,6 +1,6 @@
 <div class="challenge">
   <div class="challenge-title">{{challenge?.label}}</div>
-  <div class="challenge-day" *ngIf="challenge?.day">on the
+  <div class="challenge-day" *ngIf="challenge?.day">
     <a routerLink="../../calendar/{{challenge.day}}">{{challenge.dayLabel}}</a>
   </div>
   <div class="challenge-description">{{challenge?.description}}</div>

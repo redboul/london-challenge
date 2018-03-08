@@ -46,6 +46,9 @@ export class ChallengeStorageService {
         this.storage.ref(filePath).getMetadata(),
       );
     }
-    return this.downloadMetadataCache.get(filePath);
+    return this.downloadMetadataCache.get(filePath).catch(() => {
+      console.log('impossible de récupérer les métadonnées du fichier');
+      return Observable.of('failure');
+    });;
   }
 }
