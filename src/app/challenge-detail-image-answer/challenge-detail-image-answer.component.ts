@@ -34,7 +34,7 @@ export class ChallengeDetailImageAnswerComponent implements OnInit {
       .share();
   }
 
-  getDownloadUrl(answer) {
+  getDownloadUrl() {
     return this.url$;
   }
   imageLoaded() {
