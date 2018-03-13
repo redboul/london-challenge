@@ -8,8 +8,16 @@
   </div>
   <div class="day-challenges">
     <div class="day-challenges-category" *ngFor="let categoryAndChallenges of challengesByCategory">
-      <div class="day-challenges-categoryLabel">{{categoryAndChallenges[0]}}</div>
-      <app-challenge [challenge]="challenge" *ngFor="let challenge of categoryAndChallenges[1]" (click)="goToChallenge(challenge)"></app-challenge>
+      <mat-accordion>
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="day-challenges-categoryLabel">{{categoryAndChallenges[0]}}</div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <app-challenge [challenge]="challenge" *ngFor="let challenge of categoryAndChallenges[1]" (click)="goToChallenge(challenge)"></app-challenge>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
   </div>
 

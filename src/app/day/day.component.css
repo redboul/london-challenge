@@ -3,11 +3,10 @@
   margin: 20px;
 }
 
-.day-challenges-categoryLabel {
+:host .mat-expansion-panel .mat-expansion-panel-header {
   font-size: 1.2rem;
   text-align: center;
-  background-color: #AAF;
-  margin: 20px;
+  background-color: #aaf;
 }
 
 .day-progressBar {
