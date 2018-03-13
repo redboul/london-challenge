@@ -29,6 +29,7 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
   allChallengeSubscription: Subscription;
   ffChallengeSubscription: Subscription;
   uploading = false;
+  errorMessage: string;
   constructor(
     private fulfilledChallengesService: FulfilledChallengesService,
     private challengesService: ChallengesService,
@@ -91,7 +92,7 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
       !!this.fulfilledChallenge &&
       !!this.fulfilledChallenge.answers &&
       !!this.fulfilledChallenge.answers.length &&
-      (this.challenge.maxAnswers || 1) >= this.fulfilledChallenge.answers.length
+      (this.challenge.maxAnswers || 1) <= this.fulfilledChallenge.answers.length
     );
   }
 
@@ -127,21 +128,38 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
   openFileInput() {
     this.el.nativeElement.querySelector('#fileForAnswer').click();
   }
+  getNumberOfAnswers(): number {
+    return (
+      (!!this.fulfilledChallenge &&
+        !!this.fulfilledChallenge.answers &&
+        this.fulfilledChallenge.answers.length) ||
+      0
+    );
+  }
   submitFileForAnswer(event) {
     this.uploading = true;
-    const uploadTasks: AngularFireUploadTask[] = Array.from(
-      event.target.files,
-    ).map(file => this.challengeStorageService.addFile(file as File));
+    const uploadTasks: AngularFireUploadTask[] = take(
+      Array.from(event.target.files),
+      this.challenge.maxAnswers - this.getNumberOfAnswers(),
+    )
+      .filter(file => file.size < 20 * 1024 * 1024)
+      .map(file => this.challengeStorageService.addFile(file as File));
     Promise.all(uploadTasks)
       .then((taskResponses: UploadTaskSnapshot[]) => {
         this.fulfilledChallengesService.submitFulfillChallenge({
           id: this.challenge.id,
           day: this.challenge.day,
           type: this.challenge.type,
-          answers: taskResponses.map(taskResponse => taskResponse.ref.fullPath),
+          answers: (this.fulfilledChallenge.answers || []).concat(
+            taskResponses.map(taskResponse => taskResponse.ref.fullPath),
+          ),
         });
       })
-      .catch(() => {})
+      .catch(err => {
+        console.log(err);
+        this.errorMessage = `An error occurrued during upload.
+          Please try later with a better connectivity.`;
+      })
       .then(() => (this.uploading = false));
   }
 }

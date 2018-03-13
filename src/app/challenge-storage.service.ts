@@ -6,7 +6,11 @@ import {
 } from 'angularfire2/storage';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/skip';
 import 'rxjs/add/operator/catch';
 
 @Injectable()
@@ -32,7 +36,7 @@ export class ChallengeStorageService {
     }
     return this.downloadUrlCache.get(filePath).catch(() => {
       console.log('impossible d\'uploader le fichier');
-      return Observable.of('failure');
+      return Observable.interval(3000).skip(1).first();
     });
   }
 

@@ -2,9 +2,9 @@
   <div class="challengeImageAnswer-loader" *ngIf="!hasImageLoaded()">
     <mat-spinner [diameter]="30" color="primary"></mat-spinner>
   </div>
-  <div *ngIf="(getDownloadUrl(filePath) | async) !== null" class="challengeImageAnswer-content">
+  <div *ngIf="(getDownloadUrl() | async) !== null" class="challengeImageAnswer-content">
     <div class="challengeImageAnswer-content-image">
-      <img [src]="getDownloadUrl(filePath) | async" (load)="imageLoaded()" />
+      <img [src]="getDownloadUrl() | async" (load)="imageLoaded()" />
     </div>
     <app-delete-answer [hidden]="!hasImageLoaded()" (delete)="confirmDelete()"></app-delete-answer>
   </div>

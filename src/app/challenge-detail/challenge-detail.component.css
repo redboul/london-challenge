@@ -26,6 +26,10 @@
   max-height: 300px;
 }
 
+.challenge-media-answer {
+  min-height: 140px;
+}
+
 .challenge-media-answersLabel,
 .challenge-text-answersLabel {
   margin: 10px;
@@ -66,4 +70,9 @@
 .challenge-media-form .mat-raised-button {
   font-size: 1.2rem;
   line-height: 3rem;
+}
+
+.challenge-media-error {
+  color: red;
+  font-weight: bold;
 }

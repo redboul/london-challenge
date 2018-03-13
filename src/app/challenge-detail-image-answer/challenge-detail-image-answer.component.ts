@@ -7,6 +7,7 @@ import {
   transition,
   animate,
 } from '@angular/animations';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-challenge-detail-image-answer',
@@ -20,18 +21,21 @@ import {
     ]),
   ],
 })
-export class ChallengeDetailImageAnswerComponent {
+export class ChallengeDetailImageAnswerComponent implements OnInit {
   @Input() filePath;
   @Output() delete = new EventEmitter();
   isImageLoaded = false;
-  constructor(private challengeStorageService: ChallengeStorageService) { }
+  url$: Observable<string>;
+  constructor(private challengeStorageService: ChallengeStorageService) {}
+
+  ngOnInit() {
+    this.url$ = this.challengeStorageService
+      .getDownloadUrl(this.filePath)
+      .share();
+  }
 
   getDownloadUrl(answer) {
-    return this.challengeStorageService.getDownloadUrl(answer).do(value => {
-      if (value === 'failure') {
-        console.log('echec...');
-      }
-    });
+    return this.url$;
   }
   imageLoaded() {
     this.isImageLoaded = true;

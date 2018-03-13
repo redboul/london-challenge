@@ -7,6 +7,7 @@
   <div *ngIf="challenge &amp;&amp; challenge.image &amp;&amp; challenge.image.length" class="challenge-image">
     <img [src]="'/assets/images/' + challenge.image" alt="{{challenge?.image}}" />
   </div>
+  <div class="challenge-expectedAnswers" *ngIf="challenge?.maxAnswers > 1">{{challenge?.maxAnswers}} answers max</div>
   <mat-divider></mat-divider>
   <div class="challenge-text" *ngIf="isTextChallenge()">
     <div *ngIf="isChallengeFulfilled()">
@@ -27,12 +28,12 @@
       </div>
     </div>
   </div>
-
   <div class="challenge-media" *ngIf="isMediaChallenge() || isImageChallenge()">
+    <div class="challenge-media-error" *ngIf="!!errorMessage">{{errorMessage}}</div>
     <div class="challenge-media-answers" *ngIf="isChallengeFulfilled() &amp;&amp; isImageChallenge()">
       <div class="challenge-media-answersLabel">Your answers ({{fulfilledChallenge?.answers?.length}}):</div>
       <div *ngFor="let answer of fulfilledChallenge?.answers">
-        <div *ngIf="isImageChallenge()">
+        <div *ngIf="isImageChallenge()" class="challenge-media-answer">
           <app-challenge-detail-image-answer [filePath]="answer" (delete)="deleteAnswer($event)"></app-challenge-detail-image-answer>
         </div>
       </div>
@@ -40,7 +41,7 @@
     <div class="challenge-media-answers" *ngIf="isChallengeFulfilled() &amp;&amp; isMediaChallenge()">
       <div class="challenge-media-answersLabel">Your answers ({{fulfilledChallenge?.answers?.length}}):</div>
       <div *ngFor="let answer of fulfilledChallenge?.answers">
-        <div *ngIf="isMediaChallenge()">
+        <div *ngIf="isMediaChallenge()" class="challenge-media-answer">
           <app-challenge-detail-media-answer [filePath]="answer" (delete)="deleteAnswer($event)"></app-challenge-detail-media-answer>
         </div>
       </div>
