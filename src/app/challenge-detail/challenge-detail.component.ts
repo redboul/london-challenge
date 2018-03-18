@@ -1,23 +1,30 @@
-import { AppStatusService } from "./../app-status.service";
-import { Observable } from "rxjs/Observable";
-import { ChallengeStorageService } from "./../challenge-storage.service";
-import { ChallengesService } from "./../challenges.service";
-import { ActivatedRoute, ParamMap } from "@angular/router";
+import { AppStatusService } from './../app-status.service';
+import { Observable } from 'rxjs/Observable';
+import { ChallengeStorageService } from './../challenge-storage.service';
+import { ChallengesService } from './../challenges.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { FulfilledChallengesService } from "./../fulfilled-challenges.service";
-import { FulFilledChallenge } from "./../fulfilled-challenge";
-import { Input, Component, OnInit, ElementRef, OnDestroy } from "@angular/core";
-import { Challenge, challengeType } from "../challenge";
-import { AngularFireUploadTask } from "angularfire2/storage";
-import { UploadTaskSnapshot } from "@firebase/storage-types";
-import { take, pull } from "lodash";
-import "rxjs/add/observable/zip";
-import { Subscription } from "rxjs/Subscription";
+import { FulfilledChallengesService } from './../fulfilled-challenges.service';
+import { FulFilledChallenge } from './../fulfilled-challenge';
+import {
+  Input,
+  Component,
+  OnInit,
+  ElementRef,
+  OnDestroy,
+  HostBinding
+} from '@angular/core';
+import { Challenge, challengeType } from '../challenge';
+import { AngularFireUploadTask } from 'angularfire2/storage';
+import { UploadTaskSnapshot } from '@firebase/storage-types';
+import { take, pull } from 'lodash';
+import 'rxjs/add/observable/zip';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  selector: "app-challenge-detail",
-  templateUrl: "./challenge-detail.component.html",
-  styleUrls: ["./challenge-detail.component.css"]
+  selector: 'app-challenge-detail',
+  templateUrl: './challenge-detail.component.html',
+  styleUrls: ['./challenge-detail.component.css']
 })
 export class ChallengeDetailComponent implements OnInit, OnDestroy {
   challenge: Challenge;
@@ -41,7 +48,7 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.routeSubscription = this.route.paramMap.subscribe(
-      (map: ParamMap) => (this.challengeId = map.get("challengeId"))
+      (map: ParamMap) => (this.challengeId = map.get('challengeId'))
     );
     this.allChallengeSubscription = this.challengesService.allChallenges$
       .filter(challenges => !!challenges)
@@ -126,7 +133,7 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
     this.fulfilledChallengesService.submitFulfillChallenge(ffChallenge);
   }
   openFileInput() {
-    this.el.nativeElement.querySelector("#fileForAnswer").click();
+    this.el.nativeElement.querySelector('#fileForAnswer').click();
   }
   getNumberOfAnswers(): number {
     return (

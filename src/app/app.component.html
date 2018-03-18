@@ -10,8 +10,8 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <app-loading></app-loading>
-    <div [hidden]="isAppWorking()" class="appContent">
-      <router-outlet></router-outlet>
+    <div [hidden]="isAppWorking()" class="appContent" [@routerTransition]="getState(o)">
+      <router-outlet #o="outlet"></router-outlet>
       <app-current-user></app-current-user>
     </div>
   </mat-sidenav-content>

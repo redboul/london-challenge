@@ -11,7 +11,7 @@ import { ForeverChallengesComponent } from './forever-challenges/forever-challen
 import { DayComponent } from './day/day.component';
 
 export const ROUTES: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, data: { state: 'home' } },
   { path: 'forgotten-password', component: ResetPasswordComponent },
   {
     path: ':uuid',
@@ -20,22 +20,35 @@ export const ROUTES: Routes = [
       {
         path: 'calendar',
         children: [
-          { path: '', component: CalendarComponent },
-          { path: ':day', component: DayComponent },
-        ],
+          {
+            path: '',
+            component: CalendarComponent,
+            data: { state: 'calendar' }
+          },
+          { path: ':day', component: DayComponent, data: { state: 'day' } }
+        ]
       },
-      { path: 'permanentChallenges', component: ForeverChallengesComponent },
-      { path: 'challenge/:challengeId', component: ChallengeDetailComponent },
+      {
+        path: 'permanentChallenges',
+        component: ForeverChallengesComponent,
+        data: { state: 'permanentChallenges' }
+      },
+      {
+        path: 'challenge/:challengeId',
+        component: ChallengeDetailComponent,
+        data: { state: 'challenge' }
+      }
     ],
-  },
+    data: { state: 'user' }
+  }
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(ROUTES, {
-      onSameUrlNavigation: 'reload',
-    }),
+      onSameUrlNavigation: 'reload'
+    })
   ],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}
