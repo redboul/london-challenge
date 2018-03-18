@@ -8,7 +8,10 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "add-user": "babel-node server/add-user.js",
+    "add-challenge": "babel-node server/add-challenge.js",
+    "add-day": "babel-node server/add-day.js"
   },
   "private": true,
   "dependencies": {

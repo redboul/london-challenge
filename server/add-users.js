@@ -26,10 +26,15 @@ async function saveOrUpdateUser() {
       message: 'Team Name:',
     },
     {
+      type: 'input',
+      name: 'logo',
+      message: 'logo file name:',
+    },
+    {
       type: 'list',
       name: 'type',
       message: "Quel type d'utilisateur:",
-      choices: [{ name: 'participant', value: 2 }, { name: 'admin', value: 1 }],
+      choices: [{ name: 'participant', value: 1 }, { name: 'admin', value: 2 }],
     },
   ]);
   console.log(answer);
@@ -38,6 +43,7 @@ async function saveOrUpdateUser() {
     email: answer.email,
     teamName: answer.teamName,
     accountType: answer.type,
+    logo: answer.logo,
     uuid: uuidv4(),
   });
 }

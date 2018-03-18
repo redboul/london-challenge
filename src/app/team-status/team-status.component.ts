@@ -41,7 +41,7 @@ export class TeamStatusComponent implements OnInit, OnDestroy {
   }
   setCurrentUser() {
     if (this.userService.authenticatedUser.accountType === AccountType.admin) {
+      this.userService.setCurrentUser(this.teamUser);
     }
-    this.userService.setCurrentUser(this.teamUser);
   }
 }
