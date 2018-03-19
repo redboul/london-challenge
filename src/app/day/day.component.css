@@ -12,7 +12,7 @@
   background-color: #aaf;
 }
 ::ng-deep .mat-expansion-panel-content .mat-expansion-panel-body {
-  padding: 0 0 16px;
+  padding: 0;
 }
 
 .day-progressBar {

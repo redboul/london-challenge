@@ -4,7 +4,7 @@ import { UserService } from '../user.service';
 import { ChallengesService } from '../challenges.service';
 import { FulfilledChallengesService } from '../fulfilled-challenges.service';
 import { AppStatusService } from '../app-status.service';
-
+import { sortBy } from 'lodash';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.usersSubscription = this.userService.users$
       .filter(users => !!users)
       .subscribe(users => {
-        this.users = users;
+        this.users = sortBy(users, 'teamName');
         this.appStatusService.available();
       });
   }

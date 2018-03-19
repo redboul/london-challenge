@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css']
+  styleUrls: ['./calendar.component.css'],
 })
 export class CalendarComponent implements OnInit, OnDestroy {
   days: Day[];
@@ -28,7 +28,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private challengesService: ChallengesService,
     private fulfilledChallengesService: FulfilledChallengesService,
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.appStatusService.workInProgress();
@@ -36,7 +36,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       this.days = days;
       this.appStatusService.available();
     });
-    this.route.paramMap.subscribe(map => this.uuid = map.get('uuid'));
+    this.route.paramMap.subscribe(map => (this.uuid = map.get('uuid')));
     this.foreverChallengesSubscription = this.challengesService.foreverChallenges$
       .filter(challenges => !!challenges)
       .subscribe(challenges => {
@@ -46,13 +46,14 @@ export class CalendarComponent implements OnInit, OnDestroy {
       .filter(challenges => !!challenges)
       .subscribe(ffcs => {
         this.fulfilledForeverChallenges = ffcs.filter(ffc => !ffc.day);
-        this.appStatusService.available();
       });
   }
   ngOnDestroy() {
     this.appStatusService.workInProgress();
   }
   goToPermanentChallenges() {
-    this.router.navigate(['/', this.uuid, 'permanentChallenges'], { relativeTo: this.route });
+    this.router.navigate(['/', this.uuid, 'permanentChallenges'], {
+      relativeTo: this.route,
+    });
   }
 }

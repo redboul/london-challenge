@@ -1,6 +1,5 @@
 <div class="calendarDay" (click)="goToDay()">
   <div class="calendarDay-name">{{day?.dayName}}</div>
-  <div class="calendarDay-label">{{day?.labelShort}}</div>
   <div class="calendarDay-status" *ngIf="!isDayAccomplished()">
     {{fulfilledChallenges?.length}}/{{challenges?.length}}
   </div>

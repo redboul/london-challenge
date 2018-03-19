@@ -13,7 +13,8 @@ console.log('Script to add or update a London challenge');
 saveOrUpdateChallenge();
 
 async function saveOrUpdateChallenge() {
-  const answer = await inquirer.prompt([{
+  const answer = await inquirer.prompt([
+    {
       type: 'input',
       name: 'identifier',
       message: 'Identifiant:',
@@ -34,25 +35,96 @@ async function saveOrUpdateChallenge() {
       message: 'Image name:',
     },
     {
-      type: 'input',
+      type: 'list',
       name: 'day',
       message: 'Day (YYYY-MM-DD):',
+      choices: [
+        {
+          name: '26',
+          value: '2018-03-26',
+        },
+        {
+          name: '27',
+          value: '2018-03-27',
+        },
+        {
+          name: '28',
+          value: '2018-03-28',
+        },
+        {
+          name: '29',
+          value: '2018-03-29',
+        },
+        {
+          name: '30',
+          value: '2018-03-30',
+        },
+      ],
     },
     {
-      type: 'input',
+      type: 'list',
       name: 'category',
       message: 'Category:',
+      choices: [
+        {
+          name: 'Tourist',
+          value: 'Tourist Tour',
+        },
+        {
+          name: 'British Museum',
+          value: 'British Museum',
+        },
+        {
+          name: 'Museum of Brands ',
+          value: 'Museum of Brands',
+        },
+        {
+          name: 'Design Museum',
+          value: 'Design Museum',
+        },
+        {
+          name: 'Spitafields',
+          value: 'Spitafields',
+        },
+        {
+          name: 'Bus',
+          value: 'Bus',
+        },
+      ],
     },
     {
-      type: 'input',
+      type: 'list',
       name: 'dayLabel',
-      message: 'Day label shown (MMMM, dd\'th\'):',
+      message: "Day label shown (MMMM, dd'th'):",
+      choices: [
+        {
+          name: '26',
+          value: 'March, 26th',
+        },
+        {
+          name: '27',
+          value: 'March, 27th',
+        },
+        {
+          name: '28',
+          value: 'March, 28th',
+        },
+        {
+          name: '29',
+          value: 'March, 29th',
+        },
+        {
+          name: '30',
+          value: 'March, 30th',
+        },
+      ],
     },
     {
       type: 'list',
       name: 'type',
       message: 'Challenge expected answer ?',
-      choices: [{
+      choices: [
+        {
           name: 'text',
           value: 1,
         },
@@ -86,10 +158,11 @@ async function saveOrUpdateChallenge() {
       image: answer.image,
       category: answer.category,
       maxAnswers:
-        (answer.allowedAnswer &&
-          answer.allowedAnswer.length &&
-          answer.allowedAnswer) ||
-        1,
+        Number(
+          answer.allowedAnswer &&
+            answer.allowedAnswer.length &&
+            answer.allowedAnswer,
+        ) || 1,
     })
     .catch(err => console.log(err));
 }

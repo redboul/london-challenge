@@ -1,11 +1,14 @@
 <div class="calendar">
   <app-calendar-day *ngFor="let day of days;" [day]="day">
   </app-calendar-day>
-</div>
-<div class="week">
-  <a class="week-link" mat-raised-button color="primary" (click)="goToPermanentChallenges()">
-    <span class="title">All week long Challenges</span>
-    <br>
-    <span class="progress">{{fulfilledForeverChallenges?.length}}/{{foreverChallenges?.length}}</span>
-  </a>
+
+  <div class="week" *ngIf="!!days" (click)="goToPermanentChallenges()">
+    <div class="week-title">All week long Challenges</div>
+    <div class="week-status" *ngIf="fulfilledForeverChallenges?.length !== foreverChallenges?.length">
+      {{fulfilledForeverChallenges?.length}}/{{foreverChallenges?.length}}
+    </div>
+    <div class="week-status" *ngIf="fulfilledForeverChallenges?.length === foreverChallenges?.length">
+      <mat-icon>stars</mat-icon>
+    </div>
+  </div>
 </div>
