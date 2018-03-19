@@ -25,7 +25,7 @@
     <mat-form-field>
       <mat-select placeholder="All days" (selectionChange)="updateSelectedDay($event)" [(ngModel)]="dayId">
         <mat-option *ngFor="let otherDay of dayList" [value]="otherDay.id">
-          {{ otherDay.labelShort }}
+          {{ otherDay.dayName }}
         </mat-option>
       </mat-select>
     </mat-form-field>
