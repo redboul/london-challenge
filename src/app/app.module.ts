@@ -53,6 +53,7 @@ import { ChallengeDetailImageAnswerComponent } from './challenge-detail-image-an
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TeamStatusComponent } from './team-status/team-status.component';
 import { CurrentUserComponent } from './current-user/current-user.component';
+import { ChallengeDescriptionComponent } from './challenge-description/challenge-description.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { CurrentUserComponent } from './current-user/current-user.component';
     ResetPasswordComponent,
     TeamStatusComponent,
     CurrentUserComponent,
+    ChallengeDescriptionComponent,
   ],
   imports: [
     BrowserModule,
