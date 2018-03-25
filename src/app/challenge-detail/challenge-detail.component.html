@@ -23,7 +23,7 @@
     </div>
     <div class="challenge-text-form" *ngIf="!isAnswerLimitReached()">
       <mat-form-field>
-        <textarea matInput placeholder="Answer" [(ngModel)]="answerToSubmit"></textarea>
+        <textarea matInput matTextareaAutosize placeholder="Answer" [(ngModel)]="answerToSubmit"></textarea>
       </mat-form-field>
       <div class="challenge-text-submitButton">
         <button (click)="submitAnswer()" [disabled]="!answerToSubmit" mat-raised-button>Save Answer</button>

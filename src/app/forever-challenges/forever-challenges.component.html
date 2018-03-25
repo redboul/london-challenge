@@ -6,5 +6,18 @@
       {{fulfilledForeverChallenges?.length}}/{{challenges?.length}}
     </div>
   </div>
-  <app-challenge [challenge]="challenge" *ngFor="let challenge of challenges" (click)="goToChallenge(challenge)"></app-challenge>
+  <div class="week-challenges">
+    <div class="week-challenges-category" *ngFor="let categoryAndChallenges of challengesByCategory">
+      <mat-accordion>
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="week-challenges-categoryLabel">{{categoryAndChallenges[0]}}</div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <app-challenge [challenge]="challenge" *ngFor="let challenge of categoryAndChallenges[1]" (click)="goToChallenge(challenge)"></app-challenge>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
 </div>

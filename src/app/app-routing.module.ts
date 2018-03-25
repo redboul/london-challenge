@@ -33,7 +33,6 @@ export const ROUTES: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(ROUTES, {
-      enableTracing: true,
       onSameUrlNavigation: 'reload',
     }),
   ],

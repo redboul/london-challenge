@@ -6,6 +6,7 @@ import { ChallengesService } from '../challenges.service';
 import { AppStatusService } from '../app-status.service';
 import { Challenge } from '../challenge';
 import { FulFilledChallenge } from '../fulfilled-challenge';
+import { groupBy } from 'lodash';
 
 @Component({
   selector: 'app-forever-challenges',
@@ -14,6 +15,7 @@ import { FulFilledChallenge } from '../fulfilled-challenge';
 })
 export class ForeverChallengesComponent implements OnInit, OnDestroy {
   challenges: Challenge[] = [];
+  challengesByCategory: any[][] = [];
   fulfilledForeverChallenges: FulFilledChallenge[] = [];
   foreverChallengesSubscription: Subscription;
   fulfilledForeverChallengesSubscription: Subscription;
@@ -22,14 +24,17 @@ export class ForeverChallengesComponent implements OnInit, OnDestroy {
     private fulfilledChallengesService: FulfilledChallengesService,
     private appStatusService: AppStatusService,
     private router: Router,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.foreverChallengesSubscription = this.challengesService.foreverChallenges$
       .filter(challenges => !!challenges)
       .subscribe(challenges => {
         this.challenges = challenges;
+        this.challengesByCategory = Object.entries(
+          groupBy(this.challenges, 'category'),
+        );
         this.appStatusService.available();
       });
     this.fulfilledForeverChallengesSubscription = this.fulfilledChallengesService.fulfilledChallenges$
@@ -44,7 +49,9 @@ export class ForeverChallengesComponent implements OnInit, OnDestroy {
     this.fulfilledForeverChallengesSubscription.unsubscribe();
   }
   goToChallenge(challenge: Challenge) {
-    this.router.navigate(['..', 'challenge', challenge.id], { relativeTo: this.route });
+    this.router.navigate(['..', 'challenge', challenge.id], {
+      relativeTo: this.route,
+    });
   }
 
   fulfilledChallengesPercentage() {

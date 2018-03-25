@@ -33,16 +33,11 @@ export class ChallengesService {
       .collection('challenges')
       .ref.get()
       .then(challenges => {
-        console.log(challenges);
         this.challenges = challenges;
         this.allChallenges = challenges.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
         })) as Challenge[];
-        /*.filter(
-          challenge =>
-            !challenge.day || new Date(challenge.day).getTime() < Date.now(),
-        )*/
         this.allChallenges$.next(this.allChallenges);
         this.foreverChallenges$.next(
           this.allChallenges.filter(challenge => !challenge.day),

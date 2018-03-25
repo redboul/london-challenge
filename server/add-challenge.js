@@ -40,6 +40,10 @@ async function saveOrUpdateChallenge() {
       message: 'Day (YYYY-MM-DD):',
       choices: [
         {
+          name: 'none',
+          value: '',
+        },
+        {
           name: '26',
           value: '2018-03-26',
         },
@@ -71,24 +75,24 @@ async function saveOrUpdateChallenge() {
           value: 'Tourist Tour',
         },
         {
-          name: 'British Museum',
-          value: 'British Museum',
+          name: 'Olympic park',
+          value: 'Olympic park',
         },
         {
-          name: 'Museum of Brands ',
-          value: 'Museum of Brands',
+          name: 'Bank of England',
+          value: 'Bank of England',
         },
         {
-          name: 'Design Museum',
-          value: 'Design Museum',
+          name: 'The City',
+          value: 'The City',
         },
         {
           name: 'Spitafields',
           value: 'Spitafields',
         },
         {
-          name: 'Bus',
-          value: 'Bus',
+          name: 'Family',
+          value: 'Family',
         },
       ],
     },
@@ -97,6 +101,10 @@ async function saveOrUpdateChallenge() {
       name: 'dayLabel',
       message: "Day label shown (MMMM, dd'th'):",
       choices: [
+        {
+          name: 'none',
+          value: '',
+        },
         {
           name: '26',
           value: 'March, 26th',

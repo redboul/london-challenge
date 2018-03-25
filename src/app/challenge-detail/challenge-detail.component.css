@@ -47,11 +47,13 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: calc(100% - 75px);
+  width: calc(100% - 65px);
 }
 .textAnswer-content p {
-  padding: 20px;
+  padding: 10px;
   margin: 0;
+  word-break: break-word;
+  text-align: justify;
 }
 
 .challenge-text-form .mat-form-field {

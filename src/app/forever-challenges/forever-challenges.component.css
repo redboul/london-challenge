@@ -5,3 +5,15 @@
 .week-progressBar-status {
   text-align: right;
 }
+
+:host .mat-expansion-panel .mat-expansion-panel-header {
+  font-size: 1.2rem;
+  text-align: center;
+  background-color: white;
+}
+:host .mat-expansion-panel.mat-expanded .mat-expansion-panel-header {
+  background-color: #aaf;
+}
+::ng-deep .mat-expansion-panel-content .mat-expansion-panel-body {
+  padding: 0;
+}
