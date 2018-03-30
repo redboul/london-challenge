@@ -12,10 +12,9 @@
     "add-user": "babel-node server/add-user.js",
     "add-challenge": "babel-node server/add-challenge.js",
     "add-day": "babel-node server/add-day.js",
-    "backup": "npm-s backupFs tarBackup",
-    "backupFS":
-      "firestore-backup -a .private/london-challenge.json -B .backup-$(date '+%Y%m%d-%H%M')",
-    "tarBackup": "tar -czf .backup* .backup.all.tgz"
+    "backup": "run-s backupFS tarBackup",
+    "backupFS": "firestore-backup -a .private/london-challenge.json -B .backup-$(date '+%Y%m%d-%H%M')",
+    "tarBackup": "tar -czf .backup.all.tgz .backup*"
   },
   "private": true,
   "dependencies": {
