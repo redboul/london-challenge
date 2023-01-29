@@ -10,7 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { FirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -97,7 +97,7 @@ import { ChallengeDescriptionComponent } from './challenge-description/challenge
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    AngularFirestoreModule,
+    FirestoreModule,
     AngularFireStorageModule,
     ServiceWorkerModule.register('/ngsw-worker.js', {
       enabled: environment.production,

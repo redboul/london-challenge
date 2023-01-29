@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFirestore } from 'angularfire2/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { UserService } from './user.service';
-import { QuerySnapshot, Query } from 'firebase/firestore';
+import { QuerySnapshot, Query } from 'firebase/compat/firestore';
 import { FulFilledChallenge } from './fulfilled-challenge';
 import { User } from './user';
 
@@ -15,7 +15,7 @@ export class FulfilledChallengesService {
   private fulfilledChallengesCollection;
   size$ = new BehaviorSubject(0);
   fulfilledChallenges$ = new BehaviorSubject<FulFilledChallenge[]>(null);
-  constructor(private db: AngularFirestore, private userService: UserService) {
+  constructor(private db: Firestore, private userService: UserService) {
     userService.currentUser$
       .filter(u => !!u)
       .subscribe(u => this.retrieveFulFilledChallenges(u));

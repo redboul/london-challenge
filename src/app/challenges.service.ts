@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { User } from 'firebase/app';
+import { User } from 'firebase/compat/app';
 
-import { AngularFirestore } from 'angularfire2/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AuthenticationService } from './authentication.service';
-import { QuerySnapshot } from 'firebase/firestore';
+import { QuerySnapshot } from 'firebase/compat/firestore';
 import { Subject } from 'rxjs/Subject';
 import { AppStatusService } from './app-status.service';
 import { Challenge } from './challenge';
@@ -17,7 +17,7 @@ export class ChallengesService {
   public allChallenges: Challenge[] = [];
   constructor(
     private authenticationService: AuthenticationService,
-    private db: AngularFirestore,
+    private db: Firestore,
     private appStatusService: AppStatusService,
   ) {
     authenticationService.authenticatedUser$
