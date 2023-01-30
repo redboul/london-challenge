@@ -7,7 +7,7 @@ import { Day } from '../day';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Challenge } from '../challenge';
 import { FulFilledChallenge } from '../fulfilled-challenge';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',

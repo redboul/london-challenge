@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Firestore } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { UserService } from './user.service';
 import { QuerySnapshot, Query } from 'firebase/compat/firestore';
 import { FulFilledChallenge } from './fulfilled-challenge';

@@ -3,7 +3,7 @@ import { User, AccountType } from './../user';
 import { AppStatusService } from './../app-status.service';
 import { FulfilledChallengesService } from './../fulfilled-challenges.service';
 import { ChallengesService } from './../challenges.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
 @Component({

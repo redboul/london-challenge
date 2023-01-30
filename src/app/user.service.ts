@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from 'firebase/compat/app';
 
 import { Firestore } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import { User as LondonChallengeUser, AccountType } from './user';
 

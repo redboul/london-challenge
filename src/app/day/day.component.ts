@@ -7,7 +7,7 @@ import { ChallengesService } from '../challenges.service';
 import { FulfilledChallengesService } from '../fulfilled-challenges.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppStatusService } from '../app-status.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { groupBy } from 'lodash';
 
 @Component({

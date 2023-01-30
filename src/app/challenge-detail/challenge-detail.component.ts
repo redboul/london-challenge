@@ -1,5 +1,6 @@
+
+import {zip as observableZip,  Observable ,  Subscription } from 'rxjs';
 import { AppStatusService } from "./../app-status.service";
-import { Observable } from "rxjs/Observable";
 import { ChallengeStorageService } from "./../challenge-storage.service";
 import { ChallengesService } from "./../challenges.service";
 import { ActivatedRoute, ParamMap } from "@angular/router";
@@ -12,7 +13,6 @@ import { AngularFireUploadTask } from "angularfire2/storage";
 import { UploadTaskSnapshot } from "@firebase/storage-types";
 import { take, pull } from "lodash";
 import "rxjs/add/observable/zip";
-import { Subscription } from "rxjs/Subscription";
 
 @Component({
   selector: "app-challenge-detail",
@@ -57,7 +57,7 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
             ffc => ffc.id === this.challenge.id
           ))
       );
-    this.appStatusSubscription = Observable.zip(
+    this.appStatusSubscription = observableZip(
       this.challengesService.allChallenges$.filter(challenges => !!challenges),
       this.fulfilledChallengesService.fulfilledChallenges$.filter(
         ffcs => !!ffcs

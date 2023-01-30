@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
 import { AppStatusService } from './app-status.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { User } from './user';
 
 @Component({

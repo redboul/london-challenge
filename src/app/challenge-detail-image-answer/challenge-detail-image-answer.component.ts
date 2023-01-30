@@ -7,7 +7,7 @@ import {
   transition,
   animate,
 } from '@angular/animations';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-challenge-detail-image-answer',

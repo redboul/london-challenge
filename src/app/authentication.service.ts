@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { User } from 'firebase/compat/app';
 import { Firestore } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class AuthenticationService {

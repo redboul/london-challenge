@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { User } from 'firebase/compat/app';
 
 import { Firestore } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject ,  Subject } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import { QuerySnapshot } from 'firebase/compat/firestore';
-import { Subject } from 'rxjs/Subject';
 import { AppStatusService } from './app-status.service';
 import { Challenge } from './challenge';
 
