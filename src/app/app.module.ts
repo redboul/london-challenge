@@ -8,10 +8,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { FirestoreModule } from '@angular/fire/firestore';
-import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -95,7 +96,7 @@ import { ChallengeDescriptionComponent } from './challenge-description/challenge
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    FirestoreModule,
+    AngularFirestoreModule,
     AngularFireStorageModule,
     ServiceWorkerModule.register('/ngsw-worker.js', {
       enabled: environment.production,

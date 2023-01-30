@@ -1,36 +1,38 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { User } from 'firebase/compat/app';
-import { Firestore } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { AngularFireAuth } from "@angular/fire/auth";
+import firebase from "firebase";
+import { AngularFirestore } from "@angular/fire/firestore";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable()
 export class AuthenticationService {
-  authenticatedUser$ = new BehaviorSubject(this.afAuth.auth.currentUser);
-  constructor(private afAuth: AngularFireAuth, private db: Firestore) {
-    this.afAuth.auth.onAuthStateChanged(user =>
-      this.authenticatedUser$.next(user),
+  authenticatedUser$ = new BehaviorSubject(this.afAuth.currentUser);
+  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) {
+    this.afAuth.onAuthStateChanged((user: firebase.User) =>
+      this.authenticatedUser$.next(Promise.resolve(user))
     );
   }
 
   isAuthenticated() {
-    return !!this.afAuth.auth.currentUser;
+    return !!this.afAuth.currentUser;
   }
 
   userId() {
-    return this.afAuth.auth.currentUser && this.afAuth.auth.currentUser.uid;
+    return this.afAuth.currentUser && this.afAuth.currentUser.uid;
   }
 
   login(user: { email: string; password: string }): Promise<any> {
-    return this.afAuth.auth
-      .signInWithEmailAndPassword(user.email, user.password);
+    return this.afAuth.signInWithEmailAndPassword(
+      user.email,
+      user.password
+    );
   }
   logout() {
-    this.afAuth.auth.signOut();
+    this.afAuth.signOut();
   }
   resetPassword(email: string): Promise<any> {
-    return this.afAuth.auth
+    return this.afAuth
       .sendPasswordResetEmail(email)
-      .then(() => 'An email has been send for you to reset your password');
+      .then(() => "An email has been send for you to reset your password");
   }
 }

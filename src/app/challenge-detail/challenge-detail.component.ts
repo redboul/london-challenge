@@ -9,7 +9,7 @@ import { FulfilledChallengesService } from "./../fulfilled-challenges.service";
 import { FulFilledChallenge } from "./../fulfilled-challenge";
 import { Input, Component, OnInit, ElementRef, OnDestroy } from "@angular/core";
 import { Challenge, challengeType } from "../challenge";
-import { AngularFireUploadTask } from "angularfire2/storage";
+import { AngularFireUploadTask } from "@angular/fire/storage";
 import { UploadTaskSnapshot } from "@firebase/storage-types";
 import { take, pull } from "lodash";
 import "rxjs/add/observable/zip";

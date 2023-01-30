@@ -1,20 +1,13 @@
 
-import {interval as observableInterval,  Observable } from 'rxjs';
+import {interval as observableInterval,  Observable, of } from 'rxjs';
 
 import {first, skip, catchError} from 'rxjs/operators';
 import { UserService } from './user.service';
-import { AuthenticationService } from './authentication.service';
 import {
   AngularFireStorage,
   AngularFireUploadTask,
-} from 'angularfire2/storage';
+} from '@angular/fire/storage';
 import { Injectable } from '@angular/core';
-
-
-
-
-
-
 
 @Injectable()
 export class ChallengeStorageService {
@@ -55,7 +48,7 @@ export class ChallengeStorageService {
     }
     return this.downloadMetadataCache.get(filePath).pipe(catchError(() => {
       console.log('impossible de récupérer les métadonnées du fichier');
-      return Observable.of('failure');
+      return of('failure');
     }));;
   }
 }
