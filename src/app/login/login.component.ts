@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {UntypedFormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import { AuthenticationService } from '../authentication.service';
 import { AppStatusService } from '../app-status.service';
 
@@ -10,12 +10,12 @@ import { AppStatusService } from '../app-status.service';
 })
 export class LoginComponent implements OnInit {
   user = {email: null as string, password: null as string};
-  emailFormControl = new FormControl('', [
+  emailFormControl = new UntypedFormControl('', [
     Validators.required,
     Validators.email,
   ]);
 
-  passwordFormControl = new FormControl('', [
+  passwordFormControl = new UntypedFormControl('', [
     Validators.required,
     Validators.minLength(6),
   ]);

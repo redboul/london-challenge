@@ -1,6 +1,6 @@
 import { AppStatusService } from './../app-status.service';
 import { AuthenticationService } from './../authentication.service';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -12,7 +12,7 @@ export class ResetPasswordComponent implements OnInit {
   user = { email: undefined };
   processingMessage: string;
   sendingEmail = false;
-  emailFormControl = new FormControl('', [
+  emailFormControl = new UntypedFormControl('', [
     Validators.required,
     Validators.email,
   ]);
