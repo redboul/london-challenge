@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import firebase from "firebase";
+import firebase from "firebase/compat";
 
-import { AngularFirestore, QuerySnapshot } from "@angular/fire/firestore";
+import { AngularFirestore, QuerySnapshot } from "@angular/fire/compat/firestore";
 import { BehaviorSubject } from "rxjs";
 import { AuthenticationService } from "./authentication.service";
 import { AppStatusService } from "./app-status.service";

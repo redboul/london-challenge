@@ -8,10 +8,10 @@ import { FulfilledChallengesService } from "./../fulfilled-challenges.service";
 import { FulFilledChallenge } from "./../fulfilled-challenge";
 import { Input, Component, OnInit, ElementRef, OnDestroy } from "@angular/core";
 import { Challenge, challengeType } from "../challenge";
-import { AngularFireUploadTask } from "@angular/fire/storage";
+import { AngularFireUploadTask } from "@angular/fire/compat/storage";
 import { take, pull } from "lodash";
 import { filter } from "rxjs/operators";
-import { UploadTaskSnapshot } from "@angular/fire/storage/interfaces";
+import { UploadTaskSnapshot } from "@angular/fire/compat/storage/interfaces";
 
 @Component({
   selector: "app-challenge-detail",

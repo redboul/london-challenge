@@ -6,7 +6,7 @@ import { UserService } from './user.service';
 import {
   AngularFireStorage,
   AngularFireUploadTask,
-} from '@angular/fire/storage';
+} from '@angular/fire/compat/storage';
 import { Injectable } from '@angular/core';
 
 @Injectable()

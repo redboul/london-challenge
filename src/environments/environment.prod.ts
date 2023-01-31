@@ -1,5 +1,5 @@
 import firebaseConfig from './firebase.config';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/compat';
 
 export const environment = {
   production: true,

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { AngularFireAuth } from "@angular/fire/auth";
-import firebase from "firebase";
-import { AngularFirestore } from "@angular/fire/firestore";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
+import firebase from "firebase/compat";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { BehaviorSubject, from } from "rxjs";
 import { Subject } from "rxjs";
 

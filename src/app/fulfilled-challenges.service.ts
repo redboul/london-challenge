@@ -5,7 +5,7 @@ import {
   QuerySnapshot,
   Query,
   AngularFirestoreCollection,
-} from "@angular/fire/firestore";
+} from "@angular/fire/compat/firestore";
 import { BehaviorSubject } from "rxjs";
 import { UserService } from "./user.service";
 

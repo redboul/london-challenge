@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-import { AngularFirestore } from "@angular/fire/firestore";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { BehaviorSubject } from "rxjs";
 import { AuthenticationService } from "./authentication.service";
 import { User as LondonChallengeUser, AccountType } from "./user";
