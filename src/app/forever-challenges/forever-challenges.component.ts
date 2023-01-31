@@ -6,7 +6,7 @@ import { ChallengesService } from "../challenges.service";
 import { AppStatusService } from "../app-status.service";
 import { Challenge } from "../challenge";
 import { FulFilledChallenge } from "../fulfilled-challenge";
-import { groupBy } from "lodash";
+import { groupBy } from "lodash-es";
 import { filter } from "rxjs/operators";
 
 @Component({

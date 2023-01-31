@@ -10,12 +10,12 @@ export class MenuComponent implements OnInit {
 
   @Output() toggleMenu = new EventEmitter();
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
   toggleSideNav() {
-    this.toggleMenu.next();
+    this.toggleMenu.next(null);
   }
 }

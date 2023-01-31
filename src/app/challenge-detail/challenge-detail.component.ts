@@ -138,10 +138,11 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
       0
     );
   }
-  submitFileForAnswer(event) {
+  submitFileForAnswer(event: Event) {
     this.uploading = true;
+    const element = event.target as HTMLInputElement;
     const uploadTasks: AngularFireUploadTask[] = take(
-      Array.from(event.target.files),
+      Array.from(element.files),
       (this.challenge.maxAnswers || 1) - this.getNumberOfAnswers()
     )
       .filter((file) => file.size < 20 * 1024 * 1024)

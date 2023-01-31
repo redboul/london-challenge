@@ -25,7 +25,7 @@ export class DeleteAnswerComponent {
   showConfirmDeleteState = 'out';
 
   confirmDelete() {
-    this.delete.next();
+    this.delete.next(null);
   }
 
   showConfirmDelete() {
