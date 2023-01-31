@@ -8,6 +8,7 @@ import {
   animate,
 } from '@angular/animations';
 import { Observable } from 'rxjs';
+import { share } from 'rxjs/operators';
 
 @Component({
   selector: 'app-challenge-detail-image-answer',
@@ -31,7 +32,7 @@ export class ChallengeDetailImageAnswerComponent implements OnInit {
   ngOnInit() {
     this.url$ = this.challengeStorageService
       .getDownloadUrl(this.filePath)
-      .share();
+      .pipe(share());
   }
 
   getDownloadUrl() {

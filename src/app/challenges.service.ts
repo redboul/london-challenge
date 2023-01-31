@@ -1,45 +1,49 @@
-import { Injectable } from '@angular/core';
-import { User } from 'firebase/compat/app';
+import { Injectable } from "@angular/core";
+import firebase from "firebase";
 
-import { Firestore } from '@angular/fire/firestore';
-import { BehaviorSubject ,  Subject } from 'rxjs';
-import { AuthenticationService } from './authentication.service';
-import { QuerySnapshot } from 'firebase/compat/firestore';
-import { AppStatusService } from './app-status.service';
-import { Challenge } from './challenge';
+import { AngularFirestore, QuerySnapshot } from "@angular/fire/firestore";
+import { BehaviorSubject } from "rxjs";
+import { AuthenticationService } from "./authentication.service";
+import { AppStatusService } from "./app-status.service";
+import { Challenge } from "./challenge";
+import { filter } from "rxjs/operators";
 
 @Injectable()
 export class ChallengesService {
-  private challenges: QuerySnapshot;
+  private challenges: QuerySnapshot<Challenge>;
   public foreverChallenges$ = new BehaviorSubject<Challenge[]>(undefined);
   public allChallenges$ = new BehaviorSubject<Challenge[]>(undefined);
   public allChallenges: Challenge[] = [];
   constructor(
-    private authenticationService: AuthenticationService,
-    private db: Firestore,
-    private appStatusService: AppStatusService,
+    authenticationService: AuthenticationService,
+    private db: AngularFirestore,
+    private appStatusService: AppStatusService
   ) {
     authenticationService.authenticatedUser$
-      .filter(user => !!user)
-      .subscribe(user => {
+      .pipe(filter((user) => !!user))
+      .subscribe((user) => {
         this.retrieveChallenges(user);
       });
   }
 
-  retrieveChallenges(fUser: User) {
+  retrieveChallenges(fUser: firebase.User) {
     this.appStatusService.workInProgress();
     this.db
-      .collection('challenges')
+      .collection<Challenge>("challenges")
       .ref.get()
-      .then(challenges => {
+      .then((challenges) => {
         this.challenges = challenges;
-        this.allChallenges = challenges.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as Challenge[];
+        this.allChallenges = challenges.docs.map((doc) =>
+          Object.assign(
+            {
+              id: doc.id,
+            } as Challenge,
+            doc.data()
+          )
+        );
         this.allChallenges$.next(this.allChallenges);
         this.foreverChallenges$.next(
-          this.allChallenges.filter(challenge => !challenge.day),
+          this.allChallenges.filter((challenge) => !challenge.day)
         );
         this.appStatusService.available();
       });

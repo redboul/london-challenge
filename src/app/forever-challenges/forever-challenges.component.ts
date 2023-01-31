@@ -1,17 +1,18 @@
-import { FulfilledChallengesService } from './../fulfilled-challenges.service';
-import { Subscription } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ChallengesService } from '../challenges.service';
-import { AppStatusService } from '../app-status.service';
-import { Challenge } from '../challenge';
-import { FulFilledChallenge } from '../fulfilled-challenge';
-import { groupBy } from 'lodash';
+import { FulfilledChallengesService } from "./../fulfilled-challenges.service";
+import { Subscription } from "rxjs";
+import { Router, ActivatedRoute } from "@angular/router";
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { ChallengesService } from "../challenges.service";
+import { AppStatusService } from "../app-status.service";
+import { Challenge } from "../challenge";
+import { FulFilledChallenge } from "../fulfilled-challenge";
+import { groupBy } from "lodash";
+import { filter } from "rxjs/operators";
 
 @Component({
-  selector: 'app-forever-challenges',
-  templateUrl: './forever-challenges.component.html',
-  styleUrls: ['./forever-challenges.component.css'],
+  selector: "app-forever-challenges",
+  templateUrl: "./forever-challenges.component.html",
+  styleUrls: ["./forever-challenges.component.css"],
 })
 export class ForeverChallengesComponent implements OnInit, OnDestroy {
   challenges: Challenge[] = [];
@@ -24,24 +25,26 @@ export class ForeverChallengesComponent implements OnInit, OnDestroy {
     private fulfilledChallengesService: FulfilledChallengesService,
     private appStatusService: AppStatusService,
     private router: Router,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.foreverChallengesSubscription = this.challengesService.foreverChallenges$
-      .filter(challenges => !!challenges)
-      .subscribe(challenges => {
-        this.challenges = challenges;
-        this.challengesByCategory = Object.entries(
-          groupBy(this.challenges, 'category'),
-        );
-        this.appStatusService.available();
-      });
-    this.fulfilledForeverChallengesSubscription = this.fulfilledChallengesService.fulfilledChallenges$
-      .filter(challenges => !!challenges)
-      .subscribe(ffcs => {
-        this.fulfilledForeverChallenges = ffcs.filter(ffc => !ffc.day);
-      });
+    this.foreverChallengesSubscription =
+      this.challengesService.foreverChallenges$
+        .pipe(filter((challenges) => !!challenges))
+        .subscribe((challenges) => {
+          this.challenges = challenges;
+          this.challengesByCategory = Object.entries(
+            groupBy(this.challenges, "category")
+          );
+          this.appStatusService.available();
+        });
+    this.fulfilledForeverChallengesSubscription =
+      this.fulfilledChallengesService.fulfilledChallenges$
+        .pipe(filter((challenges) => !!challenges))
+        .subscribe((ffcs) => {
+          this.fulfilledForeverChallenges = ffcs.filter((ffc) => !ffc.day);
+        });
   }
 
   ngOnDestroy() {
@@ -49,14 +52,14 @@ export class ForeverChallengesComponent implements OnInit, OnDestroy {
     this.fulfilledForeverChallengesSubscription.unsubscribe();
   }
   goToChallenge(challenge: Challenge) {
-    this.router.navigate(['..', 'challenge', challenge.id], {
+    this.router.navigate(["..", "challenge", challenge.id], {
       relativeTo: this.route,
     });
   }
 
   fulfilledChallengesPercentage() {
     return this.fulfilledForeverChallenges && this.challenges
-      ? this.fulfilledForeverChallenges.length * 100 / this.challenges.length
+      ? (this.fulfilledForeverChallenges.length * 100) / this.challenges.length
       : 0;
   }
 }

@@ -5,6 +5,7 @@ import { AuthenticationService } from './authentication.service';
 import { AppStatusService } from './app-status.service';
 import { Subscription } from 'rxjs';
 import { User } from './user';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,9 @@ export class AppComponent implements OnInit {
     private router: Router,
   ) {}
   ngOnInit() {
-    this.currentUserSubscription = this.userService.currentUser$.filter(u => !!u).subscribe(u => this.currentUser = u);
+    this.currentUserSubscription = this.userService.currentUser$.pipe(
+      filter(u => !!u)
+    ).subscribe(u => this.currentUser = u);
   }
 
   isAuthenticated() {

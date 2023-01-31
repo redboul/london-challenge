@@ -1,29 +1,34 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { Firestore } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs';
-import { UserService } from './user.service';
-import { QuerySnapshot, Query } from 'firebase/compat/firestore';
-import { FulFilledChallenge } from './fulfilled-challenge';
-import { User } from './user';
+import {
+  AngularFirestore,
+  QuerySnapshot,
+  Query,
+  AngularFirestoreCollection,
+} from "@angular/fire/firestore";
+import { BehaviorSubject } from "rxjs";
+import { UserService } from "./user.service";
+
+import { FulFilledChallenge } from "./fulfilled-challenge";
+import { User } from "./user";
+import { filter } from "rxjs/operators";
 
 @Injectable()
 export class FulfilledChallengesService {
-  private users: User[];
-  private fulfilledChallenges: QuerySnapshot;
-  private fulfilledChallengesRef: Query;
-  private fulfilledChallengesCollection;
+  private fulfilledChallenges: QuerySnapshot<FulFilledChallenge>;
+  private fulfilledChallengesRef: Query<FulFilledChallenge>;
+  private fulfilledChallengesCollection: AngularFirestoreCollection<FulFilledChallenge>;
   size$ = new BehaviorSubject(0);
   fulfilledChallenges$ = new BehaviorSubject<FulFilledChallenge[]>(null);
-  constructor(private db: Firestore, private userService: UserService) {
+  constructor(private db: AngularFirestore, userService: UserService) {
     userService.currentUser$
-      .filter(u => !!u)
-      .subscribe(u => this.retrieveFulFilledChallenges(u));
+      .pipe(filter((u) => !!u))
+      .subscribe((u) => this.retrieveFulFilledChallenges(u));
   }
 
   retrieveFulFilledChallenges(user) {
     this.fulfilledChallengesCollection = this.db.collection(
-      `users/${user.email}/fulfilledChallenges`,
+      `users/${user.email}/fulfilledChallenges`
     );
     this.fulfilledChallengesRef = this.fulfilledChallengesCollection.ref;
     this.updateFulfilledChallenges();
@@ -32,22 +37,20 @@ export class FulfilledChallengesService {
     return this.db
       .collection(`users/${user.email}/fulfilledChallenges`)
       .ref.get()
-      .then(ffcs => ffcs.size);
+      .then((ffcs) => ffcs.size);
   }
   updateFulfilledChallenges() {
-    this.fulfilledChallengesRef
-      .get()
-      .then((fulfilledChallenges: FulFilledChallenge[]) => {
-        this.fulfilledChallenges = fulfilledChallenges;
-        const ffcs = this.fulfilledChallenges.docs
-          .map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-          }))
-          .filter(_ffcs => _ffcs && _ffcs.answers && _ffcs.answers.length);
-        this.fulfilledChallenges$.next(ffcs);
-        this.size$.next(ffcs.length);
-      });
+    this.fulfilledChallengesRef.get().then((fulfilledChallenges) => {
+      this.fulfilledChallenges = fulfilledChallenges;
+      const ffcs = this.fulfilledChallenges.docs
+        .map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }))
+        .filter((_ffcs) => _ffcs && _ffcs.answers && _ffcs.answers.length);
+      this.fulfilledChallenges$.next(ffcs);
+      this.size$.next(ffcs.length);
+    });
   }
   submitFulfillChallenge(fulfillChallenge: FulFilledChallenge) {
     this.fulfilledChallengesCollection.doc(fulfillChallenge.id).set(
@@ -55,8 +58,8 @@ export class FulfilledChallengesService {
         type: fulfillChallenge.type,
         day: fulfillChallenge.day,
         answers: fulfillChallenge.answers,
-      },
-      { merge: true },
+      } as any,
+      { merge: true }
     );
     this.updateFulfilledChallenges();
   }

@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { User } from 'firebase/compat/app';
+import { Injectable } from "@angular/core";
 
-import { Firestore } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs';
-import { AuthenticationService } from './authentication.service';
-import { User as LondonChallengeUser, AccountType } from './user';
+import { AngularFirestore } from "@angular/fire/firestore";
+import { BehaviorSubject } from "rxjs";
+import { AuthenticationService } from "./authentication.service";
+import { User as LondonChallengeUser, AccountType } from "./user";
+import { filter } from "rxjs/operators";
 
 @Injectable()
 export class UserService {
@@ -13,14 +13,14 @@ export class UserService {
   authenticatedUser: LondonChallengeUser;
   currentUser: LondonChallengeUser;
   constructor(
-    private authenticationService: AuthenticationService,
-    private db: Firestore,
+    authenticationService: AuthenticationService,
+    private db: AngularFirestore
   ) {
     authenticationService.authenticatedUser$
-      .filter(user => !!user)
-      .subscribe(user => {
+      .pipe(filter((user) => !!user))
+      .subscribe((user) => {
         this.retrieveUsersRights();
-        this.retrieveUserRights(user.email).then(u => {
+        this.retrieveUserRights(user.email).then((u) => {
           this.authenticatedUser = u;
           this.setCurrentUser(u);
         });
@@ -40,22 +40,27 @@ export class UserService {
   }
 
   retrieveUserRights(email: string): Promise<LondonChallengeUser> {
-    const userRef = this.db.collection('users').doc(email).ref;
+    const userRef = this.db.collection("users").doc(email).ref;
     return userRef
       .get()
-      .then(
-        userContent => ({ id: userContent.id, ...userContent.data() } as any),
+      .then((userContent) =>
+        Object.assign(
+          { id: userContent.id } as LondonChallengeUser,
+          userContent.data()
+        )
       );
   }
 
   retrieveUsersRights() {
-    const usersRef = this.db.collection('users').ref;
+    const usersRef = this.db.collection("users").ref;
     usersRef
       .get()
-      .then(users =>
+      .then((users) =>
         this.users$.next(
-          users.docs.map(user => ({ id: user.id, ...user.data() } as any)),
-        ),
+          users.docs.map((user) =>
+            Object.assign({ id: user.id } as LondonChallengeUser, user.data())
+          )
+        )
       );
   }
 }

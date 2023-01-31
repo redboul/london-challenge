@@ -1,5 +1,4 @@
-
-import {zip as observableZip,  Observable ,  Subscription } from 'rxjs';
+import { zip as observableZip, Subscription } from "rxjs";
 import { AppStatusService } from "./../app-status.service";
 import { ChallengeStorageService } from "./../challenge-storage.service";
 import { ChallengesService } from "./../challenges.service";
@@ -10,14 +9,14 @@ import { FulFilledChallenge } from "./../fulfilled-challenge";
 import { Input, Component, OnInit, ElementRef, OnDestroy } from "@angular/core";
 import { Challenge, challengeType } from "../challenge";
 import { AngularFireUploadTask } from "@angular/fire/storage";
-import { UploadTaskSnapshot } from "@firebase/storage-types";
 import { take, pull } from "lodash";
-import "rxjs/add/observable/zip";
+import { filter } from "rxjs/operators";
+import { UploadTaskSnapshot } from "@angular/fire/storage/interfaces";
 
 @Component({
   selector: "app-challenge-detail",
   templateUrl: "./challenge-detail.component.html",
-  styleUrls: ["./challenge-detail.component.css"]
+  styleUrls: ["./challenge-detail.component.css"],
 })
 export class ChallengeDetailComponent implements OnInit, OnDestroy {
   challenge: Challenge;
@@ -44,23 +43,26 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
       (map: ParamMap) => (this.challengeId = map.get("challengeId"))
     );
     this.allChallengeSubscription = this.challengesService.allChallenges$
-      .filter(challenges => !!challenges)
+      .pipe(filter((challenges) => !!challenges))
       .subscribe(
-        challenges =>
-          (this.challenge = challenges.find(c => c.id === this.challengeId))
+        (challenges) =>
+          (this.challenge = challenges.find((c) => c.id === this.challengeId))
       );
-    this.ffChallengeSubscription = this.fulfilledChallengesService.fulfilledChallenges$
-      .filter(ffcs => !!ffcs)
-      .subscribe(
-        ffcs =>
-          (this.fulfilledChallenge = ffcs.find(
-            ffc => ffc.id === this.challenge.id
-          ))
-      );
+    this.ffChallengeSubscription =
+      this.fulfilledChallengesService.fulfilledChallenges$
+        .pipe(filter((ffcs) => !!ffcs))
+        .subscribe(
+          (ffcs) =>
+            (this.fulfilledChallenge = ffcs.find(
+              (ffc) => ffc.id === this.challenge.id
+            ))
+        );
     this.appStatusSubscription = observableZip(
-      this.challengesService.allChallenges$.filter(challenges => !!challenges),
-      this.fulfilledChallengesService.fulfilledChallenges$.filter(
-        ffcs => !!ffcs
+      this.challengesService.allChallenges$.pipe(
+        filter((challenges) => !!challenges)
+      ),
+      this.fulfilledChallengesService.fulfilledChallenges$.pipe(
+        filter((ffcs) => !!ffcs)
       )
     ).subscribe(() => this.appStatusService.available());
   }
@@ -102,7 +104,7 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
         id: this.challenge.id,
         type: this.challenge.type,
         day: this.challenge.day,
-        answers: pull(this.fulfilledChallenge.answers, answerToRemove)
+        answers: pull(this.fulfilledChallenge.answers, answerToRemove),
       });
     }
   }
@@ -118,7 +120,7 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
           : take(
               [...this.fulfilledChallenge.answers, this.answerToSubmit],
               this.challenge.maxAnswers || 1
-            )
+            ),
     });
   }
 
@@ -142,8 +144,8 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
       Array.from(event.target.files),
       (this.challenge.maxAnswers || 1) - this.getNumberOfAnswers()
     )
-      .filter(file => file.size < 20 * 1024 * 1024)
-      .map(file => this.challengeStorageService.addFile(file as File));
+      .filter((file) => file.size < 20 * 1024 * 1024)
+      .map((file) => this.challengeStorageService.addFile(file as File));
     Promise.all(uploadTasks)
       .then((taskResponses: UploadTaskSnapshot[]) => {
         this.fulfilledChallengesService.submitFulfillChallenge({
@@ -153,10 +155,12 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
           answers: (
             (this.fulfilledChallenge && this.fulfilledChallenge.answers) ||
             []
-          ).concat(taskResponses.map(taskResponse => taskResponse.ref.fullPath))
+          ).concat(
+            taskResponses.map((taskResponse) => taskResponse.ref.fullPath)
+          ),
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         this.errorMessage = `An error occurrued during upload.
           Please try later with a better connectivity.`;

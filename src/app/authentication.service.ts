@@ -2,30 +2,30 @@ import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
 import firebase from "firebase";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, from } from "rxjs";
+import { Subject } from "rxjs";
 
 @Injectable()
 export class AuthenticationService {
-  authenticatedUser$ = new BehaviorSubject(this.afAuth.currentUser);
+  authenticatedUser$ = new Subject<firebase.User>();
+  currentUser: firebase.User;
   constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) {
-    this.afAuth.onAuthStateChanged((user: firebase.User) =>
-      this.authenticatedUser$.next(Promise.resolve(user))
-    );
+    this.afAuth.onAuthStateChanged((user: firebase.User) => {
+      this.currentUser = user;
+      this.authenticatedUser$.next(user);
+    });
   }
 
   isAuthenticated() {
-    return !!this.afAuth.currentUser;
+    return !!this.currentUser;
   }
 
   userId() {
-    return this.afAuth.currentUser && this.afAuth.currentUser.uid;
+    return this.currentUser && this.currentUser.uid;
   }
 
   login(user: { email: string; password: string }): Promise<any> {
-    return this.afAuth.signInWithEmailAndPassword(
-      user.email,
-      user.password
-    );
+    return this.afAuth.signInWithEmailAndPassword(user.email, user.password);
   }
   logout() {
     this.afAuth.signOut();

@@ -1,37 +1,37 @@
-import { Day } from './day';
-import { Injectable } from '@angular/core';
-import { User } from 'firebase/compat/app';
+import { Day } from "./day";
+import { Injectable } from "@angular/core";
+import firebase from "firebase";
 
-import { Firestore } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs';
-import { AuthenticationService } from './authentication.service';
-import { AppStatusService } from './app-status.service';
+import { AngularFirestore } from "@angular/fire/firestore";
+import { BehaviorSubject } from "rxjs";
+import { AuthenticationService } from "./authentication.service";
+import { AppStatusService } from "./app-status.service";
+import { filter } from "rxjs/operators";
 
 @Injectable()
 export class DayService {
   days$ = new BehaviorSubject(null);
   constructor(
-    private authenticationService: AuthenticationService,
-    private db: Firestore,
+    authenticationService: AuthenticationService,
+    private db: AngularFirestore
   ) {
     authenticationService.authenticatedUser$
-      .filter(user => !!user)
-      .subscribe(user => {
+      .pipe(filter((user) => !!user))
+      .subscribe((user) => {
         this.retrieveDays(user);
       });
   }
 
-  retrieveDays(fUser: User) {
+  retrieveDays(fUser: firebase.User) {
     const daysRef = this.db
-      .collection('days')
+      .collection<Day>("days")
       .ref.get()
-      .then(_days => {
-        const days = _days.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as Day[];
+      .then((_days) => {
+        const days = _days.docs.map((doc) =>
+          Object.assign({ id: doc.id }, doc.data())
+        );
         this.days$.next(
-          days,
+          days
           // days.filter(day => new Date(day.id).getTime() < Date.now()),
         );
       });

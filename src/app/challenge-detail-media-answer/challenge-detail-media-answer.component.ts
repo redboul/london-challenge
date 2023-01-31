@@ -1,5 +1,5 @@
-import { Subscription } from 'rxjs';
-import { ChallengeStorageService } from './../challenge-storage.service';
+import { Subscription } from "rxjs";
+import { ChallengeStorageService } from "./../challenge-storage.service";
 import {
   Component,
   OnInit,
@@ -7,26 +7,19 @@ import {
   EventEmitter,
   Output,
   OnDestroy,
-} from '@angular/core';
-import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-} from '@angular/animations';
-import { first } from 'lodash';
+} from "@angular/core";
+import { first } from "lodash";
 @Component({
-  selector: 'app-challenge-detail-media-answer',
-  templateUrl: './challenge-detail-media-answer.component.html',
-  styleUrls: ['./challenge-detail-media-answer.component.css'],
+  selector: "app-challenge-detail-media-answer",
+  templateUrl: "./challenge-detail-media-answer.component.html",
+  styleUrls: ["./challenge-detail-media-answer.component.css"],
 })
 export class ChallengeDetailMediaAnswerComponent implements OnInit, OnDestroy {
   @Input() filePath;
   @Output() delete = new EventEmitter();
   storageSubscription: Subscription;
   data;
-  constructor(private challengeStorageService: ChallengeStorageService) { }
+  constructor(private challengeStorageService: ChallengeStorageService) {}
 
   confirmDelete() {
     this.delete.next(this.filePath);
@@ -34,7 +27,7 @@ export class ChallengeDetailMediaAnswerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.storageSubscription = this.challengeStorageService
       .getFileMetadata(this.filePath)
-      .subscribe(data => {
+      .subscribe((data) => {
         this.data = data;
       });
   }
