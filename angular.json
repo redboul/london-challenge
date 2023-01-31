@@ -109,7 +109,6 @@
       }
     }
   },
-  "defaultProject": "london-challenge",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
