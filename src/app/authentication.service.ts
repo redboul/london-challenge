@@ -1,19 +1,30 @@
-import { Injectable } from "@angular/core";
-import { AngularFireAuth } from "@angular/fire/compat/auth";
-import firebase from "firebase/compat";
-import { AngularFirestore } from "@angular/fire/compat/firestore";
-import { BehaviorSubject, from } from "rxjs";
-import { Subject } from "rxjs";
+import { Injectable, OnDestroy } from "@angular/core";
+import {
+  Auth,
+  authState,
+  User,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from "@angular/fire/auth";
+import { Firestore } from "@angular/fire/firestore";
+import { Subscription, Subject } from "rxjs";
 
 @Injectable()
-export class AuthenticationService {
-  authenticatedUser$ = new Subject<firebase.User>();
-  currentUser: firebase.User;
-  constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) {
-    this.afAuth.onAuthStateChanged((user: firebase.User) => {
+export class AuthenticationService implements OnDestroy {
+  authenticatedUser$ = new Subject<User>();
+  currentUser: User;
+  private readonly userDisposable: Subscription | undefined;
+  constructor(private afAuth: Auth, private db: Firestore) {
+    this.userDisposable = authState(this.afAuth).subscribe((user: User) => {
       this.currentUser = user;
       this.authenticatedUser$.next(user);
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.userDisposable) {
+      this.userDisposable.unsubscribe();
+    }
   }
 
   isAuthenticated() {
@@ -25,14 +36,13 @@ export class AuthenticationService {
   }
 
   login(user: { email: string; password: string }): Promise<any> {
-    return this.afAuth.signInWithEmailAndPassword(user.email, user.password);
+    return signInWithEmailAndPassword(this.afAuth, user.email, user.password);
   }
   logout() {
     this.afAuth.signOut();
   }
-  resetPassword(email: string): Promise<any> {
-    return this.afAuth
-      .sendPasswordResetEmail(email)
-      .then(() => "An email has been send for you to reset your password");
+  async resetPassword(email: string): Promise<string> {
+    await sendPasswordResetEmail(this.afAuth, email);
+    return "An email has been send for you to reset your password";
   }
 }

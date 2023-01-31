@@ -32,7 +32,7 @@ export class ChallengeDetailImageAnswerComponent implements OnInit {
   ngOnInit() {
     this.url$ = this.challengeStorageService
       .getDownloadUrl(this.filePath)
-      .pipe(share());
+      .pipe(share<string>());
   }
 
   getDownloadUrl() {

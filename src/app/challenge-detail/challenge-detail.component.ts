@@ -6,12 +6,11 @@ import { ActivatedRoute, ParamMap } from "@angular/router";
 
 import { FulfilledChallengesService } from "./../fulfilled-challenges.service";
 import { FulFilledChallenge } from "./../fulfilled-challenge";
-import { Input, Component, OnInit, ElementRef, OnDestroy } from "@angular/core";
+import { Component, OnInit, ElementRef, OnDestroy } from "@angular/core";
 import { Challenge, challengeType } from "../challenge";
-import { AngularFireUploadTask } from "@angular/fire/compat/storage";
-import { take, pull } from "lodash";
+import { UploadTask } from "@angular/fire/storage";
+import { take, pull } from "lodash-es";
 import { filter } from "rxjs/operators";
-import { UploadTaskSnapshot } from "@angular/fire/compat/storage/interfaces";
 
 @Component({
   selector: "app-challenge-detail",
@@ -141,14 +140,14 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
   submitFileForAnswer(event: Event) {
     this.uploading = true;
     const element = event.target as HTMLInputElement;
-    const uploadTasks: AngularFireUploadTask[] = take(
+    const uploadTasks: UploadTask[] = take(
       Array.from(element.files),
       (this.challenge.maxAnswers || 1) - this.getNumberOfAnswers()
     )
       .filter((file) => file.size < 20 * 1024 * 1024)
       .map((file) => this.challengeStorageService.addFile(file as File));
     Promise.all(uploadTasks)
-      .then((taskResponses: UploadTaskSnapshot[]) => {
+      .then((taskResponses) => {
         this.fulfilledChallengesService.submitFulfillChallenge({
           id: this.challenge.id,
           day: this.challenge.day,

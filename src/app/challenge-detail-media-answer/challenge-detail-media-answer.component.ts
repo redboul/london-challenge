@@ -8,7 +8,7 @@ import {
   Output,
   OnDestroy,
 } from "@angular/core";
-import { first } from "lodash";
+import { first } from "lodash-es";
 @Component({
   selector: "app-challenge-detail-media-answer",
   templateUrl: "./challenge-detail-media-answer.component.html",

@@ -1,11 +1,16 @@
 import { Injectable } from "@angular/core";
 
 import {
-  AngularFirestore,
+  Firestore,
   QuerySnapshot,
   Query,
-  AngularFirestoreCollection,
-} from "@angular/fire/compat/firestore";
+  CollectionReference,
+  collection,
+  doc,
+  getDocs,
+  setDoc,
+  DocumentData,
+} from "@angular/fire/firestore";
 import { BehaviorSubject } from "rxjs";
 import { UserService } from "./user.service";
 
@@ -15,45 +20,41 @@ import { filter } from "rxjs/operators";
 
 @Injectable()
 export class FulfilledChallengesService {
-  private fulfilledChallenges: QuerySnapshot<FulFilledChallenge>;
-  private fulfilledChallengesRef: Query<FulFilledChallenge>;
-  private fulfilledChallengesCollection: AngularFirestoreCollection<FulFilledChallenge>;
+  private fulfilledChallengesRef: CollectionReference<DocumentData>;
+
   size$ = new BehaviorSubject(0);
   fulfilledChallenges$ = new BehaviorSubject<FulFilledChallenge[]>(null);
-  constructor(private db: AngularFirestore, userService: UserService) {
+  constructor(private db: Firestore, userService: UserService) {
     userService.currentUser$
       .pipe(filter((u) => !!u))
       .subscribe((u) => this.retrieveFulFilledChallenges(u));
   }
 
   retrieveFulFilledChallenges(user) {
-    this.fulfilledChallengesCollection = this.db.collection(
+    this.fulfilledChallengesRef = collection(
+      this.db,
       `users/${user.email}/fulfilledChallenges`
     );
-    this.fulfilledChallengesRef = this.fulfilledChallengesCollection.ref;
     this.updateFulfilledChallenges();
   }
   getFulFilledChallengesSize(user): Promise<number> {
-    return this.db
-      .collection(`users/${user.email}/fulfilledChallenges`)
-      .ref.get()
-      .then((ffcs) => ffcs.size);
+    return getDocs(this.fulfilledChallengesRef).then((ffcs) => ffcs.size);
   }
   updateFulfilledChallenges() {
-    this.fulfilledChallengesRef.get().then((fulfilledChallenges) => {
-      this.fulfilledChallenges = fulfilledChallenges;
-      const ffcs = this.fulfilledChallenges.docs
-        .map((doc) => ({
+    getDocs(this.fulfilledChallengesRef).then((fulfilledChallenges) => {
+      const ffcs = (
+        fulfilledChallenges.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
-        }))
-        .filter((_ffcs) => _ffcs && _ffcs.answers && _ffcs.answers.length);
+        })) as FulFilledChallenge[]
+      ).filter((_ffcs) => _ffcs && _ffcs.answers && _ffcs.answers.length);
       this.fulfilledChallenges$.next(ffcs);
       this.size$.next(ffcs.length);
     });
   }
   submitFulfillChallenge(fulfillChallenge: FulFilledChallenge) {
-    this.fulfilledChallengesCollection.doc(fulfillChallenge.id).set(
+    setDoc(
+      doc(this.db, this.fulfilledChallengesRef.path, fulfillChallenge.id),
       {
         type: fulfillChallenge.type,
         day: fulfillChallenge.day,

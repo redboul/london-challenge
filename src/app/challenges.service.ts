@@ -1,7 +1,12 @@
 import { Injectable } from "@angular/core";
-import firebase from "firebase/compat";
-
-import { AngularFirestore, QuerySnapshot } from "@angular/fire/compat/firestore";
+import { User } from "@angular/fire/auth";
+import {
+  Firestore,
+  QuerySnapshot,
+  collection,
+  getDocs,
+  DocumentData
+} from "@angular/fire/firestore";
 import { BehaviorSubject } from "rxjs";
 import { AuthenticationService } from "./authentication.service";
 import { AppStatusService } from "./app-status.service";
@@ -10,13 +15,13 @@ import { filter } from "rxjs/operators";
 
 @Injectable()
 export class ChallengesService {
-  private challenges: QuerySnapshot<Challenge>;
+  private challenges: QuerySnapshot<DocumentData>;
   public foreverChallenges$ = new BehaviorSubject<Challenge[]>(undefined);
   public allChallenges$ = new BehaviorSubject<Challenge[]>(undefined);
   public allChallenges: Challenge[] = [];
   constructor(
     authenticationService: AuthenticationService,
-    private db: AngularFirestore,
+    private db: Firestore,
     private appStatusService: AppStatusService
   ) {
     authenticationService.authenticatedUser$
@@ -26,11 +31,9 @@ export class ChallengesService {
       });
   }
 
-  retrieveChallenges(fUser: firebase.User) {
+  retrieveChallenges(fUser: User) {
     this.appStatusService.workInProgress();
-    this.db
-      .collection<Challenge>("challenges")
-      .ref.get()
+    getDocs(collection(this.db, "challenges"))
       .then((challenges) => {
         this.challenges = challenges;
         this.allChallenges = challenges.docs.map((doc) =>

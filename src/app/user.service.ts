@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { Firestore, collection, getDocs, getDoc, doc } from "@angular/fire/firestore";
 import { BehaviorSubject } from "rxjs";
 import { AuthenticationService } from "./authentication.service";
 import { User as LondonChallengeUser, AccountType } from "./user";
@@ -14,7 +14,7 @@ export class UserService {
   currentUser: LondonChallengeUser;
   constructor(
     authenticationService: AuthenticationService,
-    private db: AngularFirestore
+    private db: Firestore
   ) {
     authenticationService.authenticatedUser$
       .pipe(filter((user) => !!user))
@@ -40,21 +40,18 @@ export class UserService {
   }
 
   retrieveUserRights(email: string): Promise<LondonChallengeUser> {
-    const userRef = this.db.collection("users").doc(email).ref;
-    return userRef
-      .get()
-      .then((userContent) =>
-        Object.assign(
-          { id: userContent.id } as LondonChallengeUser,
-          userContent.data()
-        )
-      );
+    const userRef = doc(this.db, `users/${email}`);
+    return getDoc(userRef).then((userContent) =>
+      Object.assign(
+        { id: userContent.id } as LondonChallengeUser,
+        userContent.data()
+      )
+    );
   }
 
   retrieveUsersRights() {
-    const usersRef = this.db.collection("users").ref;
-    usersRef
-      .get()
+    const usersRef = collection(this.db, "users");
+    getDocs(usersRef)
       .then((users) =>
         this.users$.next(
           users.docs.map((user) =>

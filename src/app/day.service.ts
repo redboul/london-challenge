@@ -1,8 +1,7 @@
 import { Day } from "./day";
 import { Injectable } from "@angular/core";
-import firebase from "firebase/compat";
-
-import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { User } from "@angular/fire/auth";
+import { Firestore, collection, getDocs } from "@angular/fire/firestore";
 import { BehaviorSubject } from "rxjs";
 import { AuthenticationService } from "./authentication.service";
 import { AppStatusService } from "./app-status.service";
@@ -13,7 +12,7 @@ export class DayService {
   days$ = new BehaviorSubject(null);
   constructor(
     authenticationService: AuthenticationService,
-    private db: AngularFirestore
+    private db: Firestore
   ) {
     authenticationService.authenticatedUser$
       .pipe(filter((user) => !!user))
@@ -22,18 +21,15 @@ export class DayService {
       });
   }
 
-  retrieveDays(fUser: firebase.User) {
-    const daysRef = this.db
-      .collection<Day>("days")
-      .ref.get()
-      .then((_days) => {
-        const days = _days.docs.map((doc) =>
-          Object.assign({ id: doc.id }, doc.data())
-        );
-        this.days$.next(
-          days
-          // days.filter(day => new Date(day.id).getTime() < Date.now()),
-        );
-      });
+  retrieveDays(fUser: User) {
+    const daysRef = getDocs(collection(this.db, "days")).then((_days) => {
+      const days = _days.docs.map((doc) =>
+        Object.assign({ id: doc.id }, doc.data())
+      );
+      this.days$.next(
+        days
+        // days.filter(day => new Date(day.id).getTime() < Date.now()),
+      );
+    });
   }
 }
