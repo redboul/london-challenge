@@ -33,8 +33,9 @@ export const ROUTES: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(ROUTES, {
-      onSameUrlNavigation: 'reload',
-    }),
+    onSameUrlNavigation: 'reload',
+    relativeLinkResolution: 'legacy'
+}),
   ],
   exports: [RouterModule],
 })
