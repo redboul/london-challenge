@@ -16,18 +16,16 @@ export class TeamStatusComponent implements OnInit, OnDestroy {
   fulfilledChallengesSize = 0;
   challengesSize;
   challengeSizeSubscription: Subscription;
-  sizePromise: Promise<number>;
   constructor(
     private userService: UserService,
     private challengesService: ChallengesService,
     private fulfilledChallenges: FulfilledChallengesService
   ) {}
 
-  ngOnInit() {
-    this.sizePromise = this.fulfilledChallenges.getFulFilledChallengesSize(
+  async ngOnInit() {
+    this.fulfilledChallengesSize = await this.fulfilledChallenges.getFulFilledChallengesSize(
       this.teamUser
     );
-    this.sizePromise.then((size) => (this.fulfilledChallengesSize = size));
     this.challengeSizeSubscription = this.challengesService.allChallenges$
       .pipe(filter((cs) => !!cs))
       .subscribe((cs) => (this.challengesSize = cs.length));

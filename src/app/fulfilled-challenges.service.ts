@@ -31,14 +31,17 @@ export class FulfilledChallengesService {
   }
 
   retrieveFulFilledChallenges(user) {
-    this.fulfilledChallengesRef = collection(
-      this.db,
-      `users/${user.email}/fulfilledChallenges`
-    );
+    this.fulfilledChallengesRef = this.getFulFilledChallengesRef(user.email);
     this.updateFulfilledChallenges();
   }
+  getFulFilledChallengesRef(userEmail) {
+    return collection(
+      this.db,
+      `users/${userEmail}/fulfilledChallenges`
+    );
+  }
   getFulFilledChallengesSize(user): Promise<number> {
-    return getDocs(this.fulfilledChallengesRef).then((ffcs) => ffcs.size);
+    return getDocs(this.getFulFilledChallengesRef(user.email)).then((ffcs) => ffcs.size);
   }
   updateFulfilledChallenges() {
     getDocs(this.fulfilledChallengesRef).then((fulfilledChallenges) => {

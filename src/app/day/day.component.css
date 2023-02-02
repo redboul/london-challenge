@@ -29,6 +29,7 @@
 .day-otherDays {
   display: flex;
   justify-content: center;
+  padding-top: 20px;
 }
 
 .day-otherDays .mat-form-field {

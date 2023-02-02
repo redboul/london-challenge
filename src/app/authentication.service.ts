@@ -7,11 +7,11 @@ import {
   sendPasswordResetEmail,
 } from "@angular/fire/auth";
 import { Firestore } from "@angular/fire/firestore";
-import { Subscription, Subject } from "rxjs";
+import { Subscription, BehaviorSubject } from "rxjs";
 
 @Injectable()
 export class AuthenticationService implements OnDestroy {
-  authenticatedUser$ = new Subject<User>();
+  authenticatedUser$ = new BehaviorSubject<User>(null);
   currentUser: User;
   private readonly userDisposable: Subscription | undefined;
   constructor(private afAuth: Auth, private db: Firestore) {
