@@ -1,0 +1,24 @@
+.calendar {
+  margin: auto;
+  height: 100vh;
+}
+
+.grid {
+  height: 100vh;
+}
+
+.calendarDay-name {
+  text-align: left;
+}
+
+.week {
+  border-radius: 5%;
+}
+
+.week-title {
+  line-height: 1.2rem;
+}
+
+.week-status {
+  text-align: right;
+}

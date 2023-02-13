@@ -11,7 +11,7 @@ import { filter } from "rxjs/operators";
 @Component({
   selector: "app-calendar-day",
   templateUrl: "./calendar-day.component.html",
-  styleUrls: ["./calendar-day.component.css"],
+  styleUrls: ["./calendar-day.component.scss"],
 })
 export class CalendarDayComponent implements OnInit {
   @Input() day: Day;

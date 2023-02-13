@@ -1,3 +1,11 @@
+@use "@angular/material" as mat;
+@use 'sass:map';
+
+@import '../../styles.scss';
+
+$color-config:  mat.get-color-config($my-theme);
+$accent-palette: map.get($color-config, 'accent');
+
 .calendarDay {
   width: 100px;
   height: 70px;
@@ -6,11 +14,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  background-color: #c8102e;
-  color: white;
-  border-radius: 5%;
-  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
-    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+  background-color: mat.get-color-from-palette($accent-palette, 500);
 }
 
 .calendarDay-name {
