@@ -20,8 +20,8 @@
       <div class="challenge-text-answer z-depth-3" *ngFor="let answer of fulfilledChallenge?.answers">
         <div class="textAnswer-content">
           <p>{{answer}}</p>
+          <app-delete-answer (delete)="deleteAnswer(answer)"></app-delete-answer>
         </div>
-        <app-delete-answer (delete)="deleteAnswer(answer)"></app-delete-answer>
       </div>
     </div>
     <div class="challenge-text-form" *ngIf="!isAnswerLimitReached()">

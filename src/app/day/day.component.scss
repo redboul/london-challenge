@@ -4,17 +4,18 @@
 @import '../../styles.scss';
 
 $color-config:  mat.get-color-config($my-theme);
-$accent-palette: map.get($color-config, 'accent');
-
-
-.day-name {
-  font-size: 1.5em;
-  margin: 20px;
-}
+$primary-palette: map.get($color-config, 'primary');
 
 .day-header {
   display: flex;
+  align-items: center;
 }
+
+.day-name {
+  font-size: 1.5em;
+  margin: 0 20px;
+}
+
 
 :host .mat-expansion-panel .mat-expansion-panel-header {
   font-size: 1.2rem;
@@ -22,7 +23,7 @@ $accent-palette: map.get($color-config, 'accent');
   background-color: white;
 }
 :host .mat-expansion-panel.mat-expanded .mat-expansion-panel-header {
-  background-color: mat.get-color-from-palette($accent-palette, 500);
+  background-color: mat.get-color-from-palette($primary-palette, 500);
 }
 ::ng-deep .mat-expansion-panel-content .mat-expansion-panel-body {
   padding: 0;
@@ -30,7 +31,6 @@ $accent-palette: map.get($color-config, 'accent');
 
 .day-progressBar {
   margin: 20px;
-  flex-grow: 1;
 }
 
 .day-progressBar-status {

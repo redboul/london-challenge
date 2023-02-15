@@ -4,7 +4,7 @@
 @import '../../styles.scss';
 
 $color-config:  mat.get-color-config($my-theme);
-$accent-palette: map.get($color-config, 'accent');
+$primary-palette: map.get($color-config, 'primary');
 
 .challenge {
   display: flex;
@@ -27,7 +27,7 @@ $accent-palette: map.get($color-config, 'accent');
 }
 
 .challenge.fulfilled {
-  background-color: mat.get-color-from-palette($accent-palette, 200);
+  background-color: mat.get-color-from-palette($primary-palette, 200);
 }
 
 .challenge-detailsAction {

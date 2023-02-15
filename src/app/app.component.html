@@ -3,8 +3,8 @@
 <mat-sidenav-container class="example-sidenav-container">
   <mat-sidenav #snav>
     <mat-nav-list (click)="snav.close()">
-      <a mat-list-item routerLink="/">Home</a>
-      <a mat-list-item *ngIf="isAuthenticated()" routerLink="/{{currentUser?.uuid}}/calendar">Calendar</a>
+      <a mat-list-item routerLink="/">Teams</a>
+      <a mat-list-item *ngIf="isAuthenticated()" routerLink="/{{currentUser?.uuid}}/calendar">Categories</a>
       <a mat-list-item *ngIf="isAuthenticated()" (click)="logout()">Logout</a>
     </mat-nav-list>
   </mat-sidenav>

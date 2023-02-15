@@ -3,11 +3,12 @@
     <button mat-fab color="primary" aria-label="Back to categories" (click)="back()">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <div class="day-progressBar">
-      <mat-progress-bar mode="determinate" [value]="fulfilledChallengesPercentage()"></mat-progress-bar>
-      <div class="day-progressBar-status">
-        {{fulfilledChallenges?.length}}/{{challenges?.length}}
-      </div>
+    <div class="day-name">{{day?.labelLong}}</div>
+  </div>
+  <div class="day-progressBar">
+    <mat-progress-bar mode="determinate" [value]="fulfilledChallengesPercentage()"></mat-progress-bar>
+    <div class="day-progressBar-status">
+      {{fulfilledChallenges?.length}}/{{challenges?.length}}
     </div>
   </div>
   <div class="day-challenges">
