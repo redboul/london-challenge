@@ -6,11 +6,18 @@
 $color-config:  mat.get-color-config($my-theme);
 $accent-palette: map.get($color-config, 'accent');
 
+:host {
+  width: 100%;
+  height: 100%;
+}
+
 .calendarDay {
-  width: 100px;
-  height: 70px;
-  margin: 5px;
-  padding: 11px;
+  height: 100%;
+}
+
+.calendarDay-card {
+  height: calc(100% - 15px);
+  width: calc(100% - 5px);
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -18,10 +25,16 @@ $accent-palette: map.get($color-config, 'accent');
 }
 
 .calendarDay-name {
-  text-align: left;
-  flex-grow: 1;
+  text-align: center;
 }
 
 .calendarDay-status {
   text-align: right;
+}
+
+mat-card-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }

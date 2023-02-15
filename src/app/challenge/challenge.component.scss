@@ -1,3 +1,11 @@
+@use "@angular/material" as mat;
+@use 'sass:map';
+
+@import '../../styles.scss';
+
+$color-config:  mat.get-color-config($my-theme);
+$accent-palette: map.get($color-config, 'accent');
+
 .challenge {
   display: flex;
   justify-content: space-between;
@@ -19,8 +27,7 @@
 }
 
 .challenge.fulfilled {
-  color: #fff;
-  background-color: green;
+  background-color: mat.get-color-from-palette($accent-palette, 200);
 }
 
 .challenge-detailsAction {

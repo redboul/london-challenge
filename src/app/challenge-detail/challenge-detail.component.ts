@@ -2,7 +2,7 @@ import { zip as observableZip, Subscription } from "rxjs";
 import { AppStatusService } from "./../app-status.service";
 import { ChallengeStorageService } from "./../challenge-storage.service";
 import { ChallengesService } from "./../challenges.service";
-import { ActivatedRoute, ParamMap } from "@angular/router";
+import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 
 import { FulfilledChallengesService } from "./../fulfilled-challenges.service";
 import { FulFilledChallenge } from "./../fulfilled-challenge";
@@ -33,6 +33,7 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
     private challengesService: ChallengesService,
     private route: ActivatedRoute,
     private el: ElementRef,
+    private router: Router,
     private challengeStorageService: ChallengeStorageService,
     private appStatusService: AppStatusService
   ) {}
@@ -121,6 +122,10 @@ export class ChallengeDetailComponent implements OnInit, OnDestroy {
               this.challenge.maxAnswers || 1
             ),
     });
+  }
+
+  back() {
+    this.router.navigate([`../../calendar/${this.challenge.day}`], { relativeTo: this.route });
   }
 
   saveOrUpdateFulfilledChallenge(ffChallenge: FulFilledChallenge) {

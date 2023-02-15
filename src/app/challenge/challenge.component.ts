@@ -7,7 +7,7 @@ import { filter } from "rxjs/operators";
 @Component({
   selector: "app-challenge",
   templateUrl: "./challenge.component.html",
-  styleUrls: ["./challenge.component.css"],
+  styleUrls: ["./challenge.component.scss"],
 })
 export class ChallengeComponent implements OnInit {
   @Input() challenge: Challenge;

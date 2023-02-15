@@ -1,8 +1,11 @@
 <div class="challenge">
-  <div class="challenge-title">{{challenge?.label}}</div>
-  <div class="challenge-day" *ngIf="challenge?.day">
-    <a routerLink="../../calendar/{{challenge.day}}">{{challenge.dayLabel}}</a>
+  <div class="challenge-header">
+    <button mat-fab color="primary" aria-label="Back to challenges" (click)="back()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="challenge-title">{{challenge?.label}}</div>
   </div>
+
   <div class="challenge-description">
     <app-challenge-description [description]="challenge?.description"></app-challenge-description>
   </div>

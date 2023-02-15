@@ -1,10 +1,9 @@
 .calendar {
   margin: auto;
-  height: 100vh;
 }
 
 .grid {
-  height: 100vh;
+  height: calc(100vh - 140px);
 }
 
 .calendarDay-name {

@@ -3,32 +3,5 @@
     <mat-grid-tile *ngFor="let day of days">
       <app-calendar-day [day]="day"> </app-calendar-day>
     </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-card class="calendarDay">
-        <mat-card-content>
-          <div class="week" *ngIf="!!days" (click)="goToPermanentChallenges()">
-            <div class="week-title">All week long Challenges</div>
-            <div
-              class="week-status"
-              *ngIf="
-                fulfilledForeverChallenges?.length !== foreverChallenges?.length
-              "
-            >
-              {{ fulfilledForeverChallenges?.length }}/{{
-                foreverChallenges?.length
-              }}
-            </div>
-            <div
-              class="week-status"
-              *ngIf="
-                fulfilledForeverChallenges?.length === foreverChallenges?.length
-              "
-            >
-              <mat-icon>stars</mat-icon>
-            </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
   </mat-grid-list>
 </div>

@@ -14,7 +14,7 @@ import { filter } from "rxjs/operators";
 @Component({
   selector: "app-day",
   templateUrl: "./day.component.html",
-  styleUrls: ["./day.component.css"],
+  styleUrls: ["./day.component.scss"],
 })
 export class DayComponent implements OnInit, OnDestroy {
   challenges: Challenge[] = [];
@@ -64,6 +64,10 @@ export class DayComponent implements OnInit, OnDestroy {
         this.allFulfilledChallenges = ffChallenges;
         this.updateFFChallenges();
       });
+  }
+
+  back() {
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 
   updateCurrentChallenges() {
