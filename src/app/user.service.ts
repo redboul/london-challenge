@@ -3,15 +3,15 @@ import { Injectable } from "@angular/core";
 import { Firestore, collection, getDocs, getDoc, doc } from "@angular/fire/firestore";
 import { BehaviorSubject } from "rxjs";
 import { AuthenticationService } from "./authentication.service";
-import { User as LondonChallengeUser, AccountType } from "./user";
+import { User as DublinChallengeUser, AccountType } from "./user";
 import { filter } from "rxjs/operators";
 
 @Injectable()
 export class UserService {
-  users$ = new BehaviorSubject<LondonChallengeUser[]>(null);
-  currentUser$ = new BehaviorSubject<LondonChallengeUser>(null);
-  authenticatedUser: LondonChallengeUser;
-  currentUser: LondonChallengeUser;
+  users$ = new BehaviorSubject<DublinChallengeUser[]>(null);
+  currentUser$ = new BehaviorSubject<DublinChallengeUser>(null);
+  authenticatedUser: DublinChallengeUser;
+  currentUser: DublinChallengeUser;
   constructor(
     authenticationService: AuthenticationService,
     private db: Firestore
@@ -26,7 +26,7 @@ export class UserService {
         });
       });
   }
-  setCurrentUser(user: LondonChallengeUser) {
+  setCurrentUser(user: DublinChallengeUser) {
     this.currentUser = user;
     this.currentUser$.next(user);
   }
@@ -39,11 +39,11 @@ export class UserService {
     );
   }
 
-  retrieveUserRights(email: string): Promise<LondonChallengeUser> {
+  retrieveUserRights(email: string): Promise<DublinChallengeUser> {
     const userRef = doc(this.db, `users/${email}`);
     return getDoc(userRef).then((userContent) =>
       Object.assign(
-        { id: userContent.id } as LondonChallengeUser,
+        { id: userContent.id } as DublinChallengeUser,
         userContent.data()
       )
     );
@@ -55,7 +55,7 @@ export class UserService {
       .then((users) =>
         this.users$.next(
           users.docs.map((user) =>
-            Object.assign({ id: user.id } as LondonChallengeUser, user.data())
+            Object.assign({ id: user.id } as DublinChallengeUser, user.data())
           )
         )
       );

@@ -92,6 +92,11 @@
             ]
           }
         }
+      },
+      "deploy": {
+        "builder": "@angular/fire:deploy",
+        "options": {}
+        }
       }
     },
     "london-challenge-e2e": {
@@ -107,6 +112,9 @@
           }
         }
       }
+    },
+    "cli": {
+      "analytics": "f4c0055e-4346-4049-9f60-63ddbab57d99"
     }
   },
   "schematics": {

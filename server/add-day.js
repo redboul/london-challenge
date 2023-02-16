@@ -1,10 +1,10 @@
-const admin = require('firebase-admin');
-const inquirer = require('inquirer');
-const serviceAccount = require("../.private/london-challenge.json");
+import admin from 'firebase-admin';
+import inquirer from 'inquirer';
+import serviceAccount from '../.private/dublin-challenge.mjs';
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://london-challenge.firebaseio.com"
+  databaseURL: "https://dublin-challenge.firebaseio.com"
 });
 
 var db = admin.firestore();

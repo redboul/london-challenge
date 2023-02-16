@@ -1,8 +1,8 @@
 export default {
-  apiKey: 'AIzaSyDuXkn6v5EpMeRMJyiFvWVUWVPRK0lXPyM',
-  authDomain: 'london-challenge.firebaseapp.com',
-  databaseURL: 'https://london-challenge.firebaseio.com',
-  projectId: 'london-challenge',
-  storageBucket: 'london-challenge.appspot.com',
-  messagingSenderId: '498368213049'
+  apiKey: "AIzaSyDUCFJIRwp7_zVyvrXiHLmloZdHDwK-pmY",
+  authDomain: "dublin-challenge-376221.firebaseapp.com",
+  projectId: "dublin-challenge-376221",
+  storageBucket: "dublin-challenge-376221.appspot.com",
+  messagingSenderId: "324882948265",
+  appId: "1:324882948265:web:28cb3cb65876b70a4fc9b8",
 };
