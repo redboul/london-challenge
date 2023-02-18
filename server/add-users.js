@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import admin from 'firebase-admin';
 import inquirer from 'inquirer';
 import { v4 as uuidv4 } from'uuid';
@@ -11,7 +13,9 @@ admin.initializeApp({
 var db = admin.firestore();
 
 console.log('Script to add or update a new London challenge user');
-saveOrUpdateUser();
+await saveOrUpdateUser();
+
+process.exit()
 
 async function saveOrUpdateUser() {
   const answer = await inquirer.prompt([
@@ -39,7 +43,7 @@ async function saveOrUpdateUser() {
   ]);
   console.log(answer);
   const usersRef = db.collection('users');
-  const setSf = usersRef.doc(answer.email).set({
+  const setSf = await usersRef.doc(answer.email).set({
     email: answer.email,
     teamName: answer.teamName,
     accountType: answer.type,

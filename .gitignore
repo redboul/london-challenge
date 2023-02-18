@@ -46,3 +46,8 @@ functions/node_modules
 .private
 firebase-debug.log
 .backup*
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json

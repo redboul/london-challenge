@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import admin from 'firebase-admin';
 import inquirer from 'inquirer';
 import serviceAccount from '../.private/dublin-challenge.mjs';
@@ -10,7 +12,9 @@ admin.initializeApp({
 var db = admin.firestore();
 
 console.log('Script to add or update a London challenge');
-saveOrUpdateChallenge();
+await saveOrUpdateChallenge();
+
+process.exit();
 
 async function saveOrUpdateChallenge() {
   const answer = await inquirer.prompt([
@@ -40,92 +44,31 @@ async function saveOrUpdateChallenge() {
       message: 'Day (YYYY-MM-DD):',
       choices: [
         {
-          name: 'none',
-          value: '',
+          name: 'Dublin',
+          value: 'Dublin',
         },
         {
-          name: '26',
-          value: '2018-03-26',
+          name: 'Dubliners',
+          value: 'Dubliners',
         },
         {
-          name: '27',
-          value: '2018-03-27',
+          name: 'Epic Museum',
+          value: 'Epic Museum',
         },
         {
-          name: '28',
-          value: '2018-03-28',
+          name: 'Journey',
+          value: 'Journey',
         },
         {
-          name: '29',
-          value: '2018-03-29',
-        },
-        {
-          name: '30',
-          value: '2018-03-30',
+          name: 'Sport',
+          value: 'Sport',
         },
       ],
     },
     {
-      type: 'list',
+      type: 'input',
       name: 'category',
       message: 'Category:',
-      choices: [
-        {
-          name: 'Tourist',
-          value: 'Tourist Tour',
-        },
-        {
-          name: 'Olympic park',
-          value: 'Olympic park',
-        },
-        {
-          name: 'Bank of England',
-          value: 'Bank of England',
-        },
-        {
-          name: 'The City',
-          value: 'The City',
-        },
-        {
-          name: 'Spitafields',
-          value: 'Spitafields',
-        },
-        {
-          name: 'Family',
-          value: 'Family',
-        },
-      ],
-    },
-    {
-      type: 'list',
-      name: 'dayLabel',
-      message: "Day label shown (MMMM, dd'th'):",
-      choices: [
-        {
-          name: 'none',
-          value: '',
-        },
-        {
-          name: '26',
-          value: 'March, 26th',
-        },
-        {
-          name: '27',
-          value: 'March, 27th',
-        },
-        {
-          name: '28',
-          value: 'March, 28th',
-        },
-        {
-          name: '29',
-          value: 'March, 29th',
-        },
-        {
-          name: '30',
-          value: 'March, 30th',
-        },
-      ],
     },
     {
       type: 'list',
@@ -154,14 +97,14 @@ async function saveOrUpdateChallenge() {
   ]);
   console.log(answer);
   const usersRef = db.collection('challenges');
-  const setSf = usersRef
+  await usersRef
     .doc(answer.identifier)
     .set({
       identifier: answer.identifier,
       label: answer.label,
       description: answer.description,
       day: answer.day,
-      dayLabel: answer.dayLabel,
+      dayLabel: answer.day,
       type: answer.type,
       image: answer.image,
       category: answer.category,

@@ -91,42 +91,35 @@
               "src/manifest.json"
             ]
           }
-        }
-      },
-      "deploy": {
-        "builder": "@angular/fire:deploy",
-        "options": {}
-        }
-      }
-    },
-    "london-challenge-e2e": {
-      "root": "e2e",
-      "sourceRoot": "e2e",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
           "options": {
-            "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "london-challenge:serve"
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "london-challenge:build:production",
+            "firebaseProject": "dublin-challenge-376221",
+            "firebaseHostingSite": "dublin-challenge-376221"
           }
         }
       }
-    },
-    "cli": {
-      "analytics": "f4c0055e-4346-4049-9f60-63ddbab57d99"
     }
   },
-  "schematics": {
-    "@schematics/angular:component": {
-      "prefix": "app",
-      "style": "scss"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "app"
+  "london-challenge-e2e": {
+    "root": "e2e",
+    "sourceRoot": "e2e",
+    "projectType": "application",
+    "architect": {
+      "e2e": {
+        "builder": "@angular-devkit/build-angular:protractor",
+        "options": {
+          "protractorConfig": "./protractor.conf.js",
+          "devServerTarget": "london-challenge:serve"
+        }
+      }
     }
   },
   "cli": {
-    "analytics": "4da4570e-8234-49b5-a377-c049fa675f34"
+    "analytics": "f4c0055e-4346-4049-9f60-63ddbab57d99"
   }
 }

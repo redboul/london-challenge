@@ -1,5 +1,14 @@
 {
   "projects": {
-    "default": "dublin-challenge"
+    "default": "dublin-challenge-376221"
+  },
+  "targets": {
+    "dublin-challenge-376221": {
+      "hosting": {
+        "london-challenge": [
+          "dublin-challenge-376221"
+        ]
+      }
+    }
   }
 }
