@@ -13,12 +13,12 @@ export class ChallengeDescriptionComponent implements OnInit {
   ngOnInit() {
     const canvas = this.el.nativeElement.querySelector('canvas');
     const context = canvas.getContext('2d');
-    const maxWidth = 300;
-    const lineHeight = 25;
+    const maxWidth = 600;
+    const lineHeight = 45;
     const x = maxWidth / 2;
-    const y = 25;
+    const y = 30;
     context.textAlign = 'center';
-    context.font = `1.1rem 'Nunito', sans-serif`;
+    context.font = `2.2rem 'Nunito', sans-serif`;
     context.fillStyle = '#000';
 
     this.wrapText(context, this.description, x, y, maxWidth, lineHeight);

@@ -39,8 +39,41 @@ $my-green-palette: (
   )
 );
 
+$myorange-palette: (
+    50 : #ffffff,
+    100 : #ffdcbd,
+    200 : #ffbf85,
+    300 : #ff993d,
+    400 : #ff891f,
+    500 : #ff7900,
+    600 : #e06a00,
+    700 : #c25c00,
+    800 : #a34d00,
+    900 : #853f00,
+    A100 : #ffffff,
+    A200 : #ffc999,
+    A400 : #ff9433,
+    A700 : #ff861a,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
 $my-primary: mat.define-palette($my-green-palette, 500);
-$my-accent: mat.define-palette(mat.$orange-palette, 500);
+$my-accent: mat.define-palette($myorange-palette, 500);
 
 $my-theme: mat.define-light-theme(
   (

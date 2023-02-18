@@ -1,53 +1,109 @@
 <div class="challenge">
   <div class="challenge-header">
-    <button mat-fab color="primary" aria-label="Back to challenges" (click)="back()">
+    <button
+      mat-fab
+      color="primary"
+      aria-label="Back to challenges"
+      (click)="back()"
+    >
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <div class="challenge-title">{{challenge?.label}}</div>
+    <div class="challenge-title">{{ challenge?.label }}</div>
   </div>
 
   <div class="challenge-description">
-    <app-challenge-description [description]="challenge?.description"></app-challenge-description>
+    <app-challenge-description
+      [description]="challenge?.description"
+    ></app-challenge-description>
   </div>
-  <div *ngIf="challenge &amp;&amp; challenge.image &amp;&amp; challenge.image.length" class="challenge-image">
-    <img [src]="'/assets/images/' + challenge.image" alt="{{challenge?.image}}" />
+  <div
+    *ngIf="challenge &amp;&amp; challenge.image &amp;&amp; challenge.image.length"
+    class="challenge-image"
+  >
+    <img
+      [src]="'/assets/images/' + challenge.image"
+      alt="{{ challenge?.image }}"
+    />
   </div>
-  <div class="challenge-expectedAnswers" *ngIf="challenge?.maxAnswers > 1">{{challenge?.maxAnswers}} answers max</div>
+  <div class="challenge-expectedAnswers" *ngIf="challenge?.maxAnswers > 1">
+    {{ challenge?.maxAnswers }} answers max
+  </div>
   <mat-divider></mat-divider>
   <div class="challenge-text" *ngIf="isTextChallenge()">
     <div *ngIf="isChallengeFulfilled()">
-      <div class="challenge-text-answersLabel">Your answers ({{fulfilledChallenge?.answers?.length}}):</div>
-      <div class="challenge-text-answer z-depth-3" *ngFor="let answer of fulfilledChallenge?.answers">
+      <div class="challenge-text-answersLabel">
+        Your answers ({{ fulfilledChallenge?.answers?.length }}):
+      </div>
+      <div
+        class="challenge-text-answer z-depth-3"
+        *ngFor="let answer of fulfilledChallenge?.answers"
+      >
         <div class="textAnswer-content">
-          <p>{{answer}}</p>
-          <app-delete-answer (delete)="deleteAnswer(answer)"></app-delete-answer>
+          <p>{{ answer }}</p>
+          <app-delete-answer
+            (delete)="deleteAnswer(answer)"
+          ></app-delete-answer>
         </div>
       </div>
     </div>
-    <div class="challenge-text-form" *ngIf="!isAnswerLimitReached()">
-      <mat-form-field>
-        <textarea matInput matTextareaAutosize placeholder="Answer" [(ngModel)]="answerToSubmit"></textarea>
-      </mat-form-field>
-      <div class="challenge-text-submitButton">
-        <button (click)="submitAnswer()" [disabled]="!answerToSubmit" mat-raised-button>Save Answer</button>
-      </div>
+    <div class="challenge-text-form-container" *ngIf="!isAnswerLimitReached()">
+      <form class="challenge-text-form" (ngSubmit)="submitAnswer()">
+        <mat-form-field appearance="fill">
+          <mat-label>Your answer...</mat-label>
+          <textarea
+            matInput
+            matNativeControl
+            [(ngModel)]="answerToSubmit"
+            name="answer"
+            id="answer"
+          ></textarea>
+        </mat-form-field>
+        <div class="challenge-text-submitButton">
+          <button
+            mat-fab
+            [disabled]="!answerToSubmit"
+            aria-label="Save Answer"
+            type="submit"
+          >
+            <mat-icon>save</mat-icon>
+          </button>
+        </div>
+      </form>
     </div>
   </div>
   <div class="challenge-media" *ngIf="isMediaChallenge() || isImageChallenge()">
-    <div class="challenge-media-error" *ngIf="!!errorMessage">{{errorMessage}}</div>
-    <div class="challenge-media-answers" *ngIf="isChallengeFulfilled() &amp;&amp; isImageChallenge()">
-      <div class="challenge-media-answersLabel">Your answers ({{fulfilledChallenge?.answers?.length}}):</div>
+    <div class="challenge-media-error" *ngIf="!!errorMessage">
+      {{ errorMessage }}
+    </div>
+    <div
+      class="challenge-media-answers"
+      *ngIf="isChallengeFulfilled() &amp;&amp; isImageChallenge()"
+    >
+      <div class="challenge-media-answersLabel">
+        Your answers ({{ fulfilledChallenge?.answers?.length }}):
+      </div>
       <div *ngFor="let answer of fulfilledChallenge?.answers">
         <div *ngIf="isImageChallenge()" class="challenge-media-answer">
-          <app-challenge-detail-image-answer [filePath]="answer" (delete)="deleteAnswer($event)"></app-challenge-detail-image-answer>
+          <app-challenge-detail-image-answer
+            [filePath]="answer"
+            (delete)="deleteAnswer($event)"
+          ></app-challenge-detail-image-answer>
         </div>
       </div>
     </div>
-    <div class="challenge-media-answers" *ngIf="isChallengeFulfilled() &amp;&amp; isMediaChallenge()">
-      <div class="challenge-media-answersLabel">Your answers ({{fulfilledChallenge?.answers?.length}}):</div>
+    <div
+      class="challenge-media-answers"
+      *ngIf="isChallengeFulfilled() &amp;&amp; isMediaChallenge()"
+    >
+      <div class="challenge-media-answersLabel">
+        Your answers ({{ fulfilledChallenge?.answers?.length }}):
+      </div>
       <div *ngFor="let answer of fulfilledChallenge?.answers">
         <div *ngIf="isMediaChallenge()" class="challenge-media-answer">
-          <app-challenge-detail-media-answer [filePath]="answer" (delete)="deleteAnswer($event)"></app-challenge-detail-media-answer>
+          <app-challenge-detail-media-answer
+            [filePath]="answer"
+            (delete)="deleteAnswer($event)"
+          ></app-challenge-detail-media-answer>
         </div>
       </div>
     </div>
@@ -55,9 +111,21 @@
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
       <div>uploading files, please wait...</div>
     </div>
-    <div [hidden]="uploading" class="challenge-media-form" *ngIf="!isAnswerLimitReached()">
-      <input type="file" id="fileForAnswer" (change)="submitFileForAnswer($event)" multiple hidden/>
-      <button mat-raised-button (click)="openFileInput()">Choose files...</button>
+    <div
+      [hidden]="uploading"
+      class="challenge-media-form"
+      *ngIf="!isAnswerLimitReached()"
+    >
+      <input
+        type="file"
+        id="fileForAnswer"
+        (change)="submitFileForAnswer($event)"
+        multiple
+        hidden
+      />
+      <button mat-raised-button (click)="openFileInput()" color="primary">
+        Choose files...
+      </button>
     </div>
   </div>
 </div>

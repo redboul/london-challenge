@@ -23,6 +23,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatRippleModule} from '@angular/material/core'
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
@@ -93,6 +94,7 @@ import { ChallengeDescriptionComponent } from './challenge-description/challenge
     MatInputModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatRippleModule,
     MatDividerModule,
     MatSelectModule,
     MatExpansionModule,
