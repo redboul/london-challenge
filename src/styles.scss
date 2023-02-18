@@ -3,7 +3,43 @@
 
 @include mat.core();
 
-$my-primary: mat.define-palette(mat.$green-palette, 500);
+$dark-primary-text: rgba(black, 0.87);
+$light-primary-text: white;
+
+$my-green-palette: (
+  50: #e0f3e9,
+  100: #b3e1c8,
+  200: #80cda4,
+  300: #4db880,
+  400: #26a964,
+  500: #009a49,
+  600: #009242,
+  700: #008839,
+  800: #007e31,
+  900: #006c21,
+  A100: #9cffb1,
+  A200: #69ff89,
+  A400: #36ff61,
+  A700: #1cff4d,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: black,
+  )
+);
+
+$my-primary: mat.define-palette($my-green-palette, 500);
 $my-accent: mat.define-palette(mat.$orange-palette, 500);
 
 $my-theme: mat.define-light-theme(
